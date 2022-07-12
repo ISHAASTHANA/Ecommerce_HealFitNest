@@ -16,6 +16,7 @@ import readyToEat from '../assets/ready-eat-foods.jpg';
 import groceries from '../assets/groceries.jpg';
 import personalCare from '../assets/Organic-Beauty.jpg';
 import homeEssential from '../assets/homeEssentials.jpg';
+import Footer from "../components/Footer";
 
 export default function Home() {
 
@@ -110,7 +111,7 @@ export default function Home() {
             </Grid>
 
             {/* ***********************BEST SELLERS************************** */}
-            <Grid container className="best-sellers-container">
+            <Grid container className="best-sellers-container" sx={{marginBottom: '4rem'}}>
                 <Grid item xs={12} style={{ marginTop: '30px' }}>
                     <div className="title" style={{
                         backgroundColor: '#D9D9D9',
@@ -134,6 +135,8 @@ export default function Home() {
                     })}
                 </Grid>
             </Grid>
+
+            <Footer />
         </div>
     )
 }
