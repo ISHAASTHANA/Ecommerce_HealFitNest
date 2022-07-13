@@ -12,12 +12,12 @@ import jaggery from '../assets/jaggeryPowder.jpg';
 import mint from '../assets/mint.jpg';
 import ghee from '../assets/desiGhee.jpg';
 import milk from '../assets/milk.jpg';
-import readyToEat from '../assets/ready-eat-foods.jpg';
-import groceries from '../assets/groceries.jpg';
-import personalCare from '../assets/Organic-Beauty.jpg';
-import homeEssential from '../assets/homeEssentials.jpg';
+import readyToEat from '../assets/1.jpg';
+import groceries from '../assets/2.jpg';
+import personalCare from '../assets/3.jpg';
+import homeEssential from '../assets/4.jpg';
 import Footer from "../components/Footer";
-import Login from "./Login";
+import bg from "../assets/bg.jpg";
 
 export default function Home() {
 
@@ -50,20 +50,34 @@ export default function Home() {
             <MovingCarousel />
 
             {/* *********************DEAL OF THE DAY************************** */}
-            <Grid container className="deal-of-the-day-container">
+            <Grid container className="deal-of-the-day-container"
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+            >
                 <Grid item xs={12} style={{ marginTop: '20px' }}>
                     <div className="title" style={{
-                        backgroundColor: '#D9D9D9',
                         padding: '5px'
                     }}>
-                        <h1>DEAL OF THE DAY!!</h1>
+                        <Typography variant="h4" sx={{
+                            fontFamily: 'Raleway,Arial, Helvetica, sans-serif',
+                            fontWeight: 'lighter',
+                            padding: '1rem',
+                            // backgroundColor: '#D9D9D9',
+                        }}>DEAL OF THE DAY!!</Typography>
                     </div>
                 </Grid>
-                <Grid container className="deal-of-the-day-cards" style={{
-                    backgroundColor: '#D9D9D9',
+                <Grid container className="deal-of-the-day-cards" sx={{
+                    // backgroundColor: '#D9D9D9',
+                    backgroundImage: `url(${bg})`,
                     marginTop: '4rem',
                     padding: '20px',
-                    margin: '20px'
+                    // margin: '20px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}>
                     {products.map((item, i) => {
                         return (
@@ -121,11 +135,15 @@ export default function Home() {
                         <h1>BEST SELLERS</h1>
                     </div>
                 </Grid>
-                <Grid container className="deal-of-the-day-cards" style={{
+                <Grid container className="deal-of-the-day-cards" sx={{
                     backgroundColor: '#D9D9D9',
                     marginTop: '4rem',
                     padding: '20px',
-                    margin: '20px'
+                    margin: '20px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+
                 }}>
                     {bestSellers.map((item, i) => {
                         return (
