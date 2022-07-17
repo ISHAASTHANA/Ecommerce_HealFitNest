@@ -1,30 +1,27 @@
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import { Grid } from '@mui/material'
-import organic from '../assets/sliderImage1.jpg'
-import organic1 from '../assets/sliderImage2.jpg'
-import organic2 from '../assets/sliderImage3.jpg'
-import organic3 from '../assets/sliderImage4.jpg'
+import slider1 from "../assets/home1.jpg";
+import slider2 from "../assets/home2.jpg";
+import slider3 from "../assets/home3.jpg";
+import './MovingCarousel.css';
 
 
 export default function MovingCarousel() {
     const items = [
         {
-            image: `${organic1}`,
+            image: `${slider1}`, title: 'Healthy you', desc: 'happy Us'
         },
         {
-            image: `${organic}`,
+            image: `${slider3}`, title: 'Aromatic Spices', desc: 'to flavour your dishes'
         },
         {
-            image: `${organic2}`,
+            image: `${slider2}`, title: 'The best ', desc: 'in quality'
         },
-        {
-            image: `${organic3}`,
-        }
     ]
 
     return (
-        <Carousel animation='slide' navButtonsAlwaysVisible duration={300}>
+        <Carousel animation='slide' duration={500}>
             {
                 items.map((item, i) => <Item key={i} item={item} />)
             }
@@ -36,7 +33,16 @@ function Item(props) {
     return (
         <Grid container>
             <Grid item xs={12}>
-                <img src={props.item.image} alt='carousel' height='580px' style={{width: '100%', objectFit: 'cover'}} />
+                <div className='slide'>
+                    <div className='slider-image'>
+                        <img src={props.item.image}
+                            alt='carousel'/>
+                    </div>
+                    <div className='meta' >
+                        <h1><span className='title-emphasis'>Healthy</span> you</h1>
+                        <p>happy <span className='title-emphasis'>Us</span></p>
+                    </div>
+                </div>
             </Grid>
         </Grid>
     )

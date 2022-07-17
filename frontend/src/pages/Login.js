@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import logo from '../assets/logo.jpg';
 
 const theme = createTheme();
 
@@ -29,13 +30,13 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}> */}
+            <img src={logo} alt='logo' width='150px' style={{borderRadius: '50%', border: '2px solid'}} />
+          {/* </Avatar> */}
+          <Typography component="h1" variant="h5" sx={{color: '#48632B', fontWeight: '600', mt:2}}>
+            Log In
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1 }}>
+          <Box component="form" noValidate sx={{ mt: 1}}>
             <TextField
               margin="normal"
               required
@@ -64,14 +65,14 @@ export default function Login() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 2, backgroundColor: '#48632B'}}
             >
-              Sign In
+              Log In
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="#" variant="body2" color='#48632B'>
+                  {"New to HealthFitnest? Sign Up"}
                 </Link>
               </Grid>
             </Grid>

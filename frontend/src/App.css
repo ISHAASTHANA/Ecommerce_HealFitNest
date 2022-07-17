@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+.container{
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.banner-container {
+  margintop: 4rem;
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
