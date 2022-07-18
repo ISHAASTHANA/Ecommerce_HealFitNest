@@ -1,12 +1,12 @@
 import MovingCarousel from "../components/MovingCarousel";
-import Header from "../components/Header";
+import Header from "../shared/Header";
 import { Grid } from "@mui/material";
 import potato from '../assets/potato.jpg';
 import walnuts from '../assets/walnuts.jpg';
 import bread from '../assets/Brown-Bread.png';
 import atta from '../assets/WholeWheatAtta.png';
 import seeds from '../assets/pumkinSeeds.jpg';
-import Footer from "../components/Footer";
+import Footer from "../shared/Footer";
 import Categories from "../components/Categories";
 import ProductsBanner from "../components/ProductsBanner";
 import BestSellerCard from "../components/BestSellerCard";

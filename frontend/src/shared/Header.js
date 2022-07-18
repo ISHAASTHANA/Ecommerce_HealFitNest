@@ -15,6 +15,8 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ArticleIcon from '@mui/icons-material/Article';
+import { Drawer } from '@mui/material';
+import SideDrawer from './SideDrawer';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -59,6 +61,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+    const [drawerOpen, setDrawerOpen] = React.useState(false);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -159,7 +163,7 @@ export default function Header() {
     return (
         <Box sx={{ flexGrow: 1 }} >
             <AppBar position="static" style={{
-                color: '#1E1E1E',   
+                color: '#1E1E1E',
                 boxShadow: 'none',
                 background: 'transparent'
             }}>
@@ -170,6 +174,9 @@ export default function Header() {
                         color="inherit"
                         aria-label="open drawer"
                         sx={{ mr: 2 }}
+                        onClick={() => {
+                            setDrawerOpen(!drawerOpen)
+                        }}
                     >
                         <MenuIcon />
                     </IconButton>
@@ -233,6 +240,9 @@ export default function Header() {
             </AppBar>
             {renderMobileMenu}
             {renderMenu}
+            <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+                <SideDrawer setDrawerOpen={setDrawerOpen} />
+            </Drawer>
         </Box>
-    );
+  );
 }

@@ -22,9 +22,9 @@ export default function BestSellerCard(props) {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent:'start'
+                    justifyContent: 'start'
                 }}>
-                    <div className="card-content" style={{marginBottom: '10px'}}>
+                    <div className="card-content" style={{ marginBottom: '10px' }}>
                         <Typography variant="h6" sx={{ fontWeight: '600' }} color="text.secondary">
                             Fruits & Vegetables
                         </Typography>

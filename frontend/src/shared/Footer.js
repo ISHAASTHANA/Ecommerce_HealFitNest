@@ -24,12 +24,12 @@ export default function Footer() {
                 <Grid item xs={3}>
                     <Typography variant="h6">Social Links</Typography>
                     <br />
-                    <EmailIcon sx={{padding: '10px'}} />
-                    <CallIcon sx={{padding: '10px'}} />
-                    <TwitterIcon sx={{padding: '10px'}} />
+                    <EmailIcon sx={{ padding: '10px' }} />
+                    <CallIcon sx={{ padding: '10px' }} />
+                    <TwitterIcon sx={{ padding: '10px' }} />
                 </Grid>
             </Grid>
-            <div style={{backgroundColor: '#000000', color: 'white', padding: '10px'}}>
+            <div style={{ backgroundColor: '#000000', color: 'white', padding: '10px' }}>
                 @Copyright
             </div>
         </footer>

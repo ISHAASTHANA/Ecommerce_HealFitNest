@@ -23,10 +23,9 @@ export default function Categories() {
             }}>
                 {category.map((item, i) => {
                     return (
-                        <Grid item xs={6} sm={3} sx={{padding: '5px'}}>
-                            <img width='180px'
-                                height='180px'
-                                style={{ borderRadius: '50%' }}
+                        <Grid item xs={6} sm={3} >
+                            <img 
+                                style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover' }}
                                 key={i} src={item.image}
                                 alt={item.name} />
                             <Typography variant="h5" sx={{

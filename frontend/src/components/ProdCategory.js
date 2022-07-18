@@ -53,7 +53,6 @@ export default function ProdCategory() {
                     //     <ProductCard item={product} key={i} />
                     // }) }
                     <div>
-                        <Typography variant="h3" sx={{ textAlign: 'left'}}>{category.categoryName}</Typography>
 
                         <Grid container style={{
                             display: 'flex',
