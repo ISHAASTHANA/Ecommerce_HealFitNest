@@ -1,23 +1,18 @@
 import MovingCarousel from "../components/MovingCarousel";
-import Header from "../components/Header";
-import { Grid, Typography } from "@mui/material";
-import ProductCard from "../components/ProductCard";
+import Header from "../shared/Header";
+import { Grid } from "@mui/material";
 import potato from '../assets/potato.jpg';
 import walnuts from '../assets/walnuts.jpg';
 import bread from '../assets/Brown-Bread.png';
 import atta from '../assets/WholeWheatAtta.png';
 import seeds from '../assets/pumkinSeeds.jpg';
-import onion from '../assets/onion.jpeg';
-import jaggery from '../assets/jaggeryPowder.jpg';
-import mint from '../assets/mint.jpg';
-import ghee from '../assets/desiGhee.jpg';
-import milk from '../assets/milk.jpg';
-import readyToEat from '../assets/1.jpg';
-import groceries from '../assets/2.jpg';
-import personalCare from '../assets/3.jpg';
-import homeEssential from '../assets/4.jpg';
-import Footer from "../components/Footer";
-import bg from "../assets/bg.jpg";
+import Footer from "../shared/Footer";
+import Categories from "../components/Categories";
+import ProductsBanner from "../components/ProductsBanner";
+import BestSellerCard from "../components/BestSellerCard";
+import bgImage from '../assets/BestSeller1.png';
+import bgImage2 from '../assets/BestSeller2.jpg';
+
 
 export default function Home() {
 
@@ -29,28 +24,50 @@ export default function Home() {
         { name: 'Pumkin Seeds', image: `${seeds}`, cost: 'Rs. 80.0', quantity: '1 packet' },
     ]
 
-    const bestSellers = [
-        { name: 'Onion', image: `${onion}`, cost: 'Rs. 40.0', quantity: '1 kg' },
-        { name: 'Jaggery Powder', image: `${jaggery}`, cost: 'Rs. 400.0', quantity: '1 kg' },
-        { name: 'Mint Leaves', image: `${mint}`, cost: 'Rs. 70.0', quantity: '1 bunch' },
-        { name: 'Desi Ghee', image: `${ghee}`, cost: 'Rs. 300.0', quantity: '1 kg' },
-        { name: "Cow's Milk", image: `${milk}`, cost: 'Rs. 60.0', quantity: '1 kg' },
+    const bestSeller = [
+        { image: { bgImage }, title: '-30% off', desc: 'Full Fresh Vegetable' },
+        { image: { bgImage2 }, title: '-35% off', desc: '100% Organic Food' }
     ]
 
-    const category = [
-        { name: 'Ready To Eat', image: `${readyToEat}` },
-        { name: 'Groceries', image: `${groceries}` },
-        { name: 'Personal Care', image: `${personalCare}` },
-        { name: 'Home Essentials', image: `${homeEssential}` },
-    ]
+
 
     return (
         <div className='home-container'>
             <Header />
             <MovingCarousel />
 
+            {/* ***********************CATEGORIES******************* */}
+            <Categories />
+
+            {/* ***********************FEATURED PRODUCTS************************** */}
+            <ProductsBanner type={'Featured Products'} />
+
+            {/* ***********************BEST SELLERS************************** */}
+            <Grid container className="container">
+                <Grid item xs={12}>
+                    <div className="title" >
+                        <div class="line"></div>
+                        <h1 variant="h4">Best Seller</h1>
+                        <div class="line"></div>
+                    </div>
+                </Grid>
+                <Grid container className="banner-container">
+                    <Grid item xs={6} sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <BestSellerCard image={bgImage}  />
+                    </Grid>
+                    <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <BestSellerCard image={bgImage2}  />
+                    </Grid>
+                </Grid>
+            </Grid>
+
             {/* *********************DEAL OF THE DAY************************** */}
-            <Grid container className="deal-of-the-day-container"
+            <ProductsBanner type={'Deal of the Day'} />
+            {/* <Grid container className="deal-of-the-day-container"
                 sx={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -66,7 +83,7 @@ export default function Home() {
                             fontWeight: 'lighter',
                             padding: '1rem',
                             // backgroundColor: '#D9D9D9',
-                        }}>DEAL OF THE DAY!!</Typography>
+                        }}>|| DEAL OF THE DAY!! ||</Typography>
                     </div>
                 </Grid>
                 <Grid container className="deal-of-the-day-cards" sx={{
@@ -87,73 +104,8 @@ export default function Home() {
                         )
                     })}
                 </Grid>
-            </Grid>
+            </Grid> */}
 
-            {/* ***********************FEATURED CATEGORIES******************* */}
-            <Grid container>
-                <Grid item xs={12} style={{ marginTop: '20px' }}>
-                    <div className="title" style={{
-                        backgroundColor: '#D9D9D9',
-                        padding: '5px'
-                    }}>
-                        <h1>Featured Categories</h1>
-                    </div>
-                </Grid>
-                <Grid container className="featured-category-container" sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    padding: '2rem'
-                }}>
-                    {category.map((item, i) => {
-                        return (
-                            <Grid item sx={{ padding: '20px', margin: '10px' }}>
-                                <img width='250px'
-                                    height='250px'
-                                    style={{ borderRadius: '50%' }}
-                                    key={i} src={item.image}
-                                    alt={item.name} />
-                                <Typography variant="h6" sx={{
-                                    backgroundColor: '#d9d9d9',
-                                    padding: '10px',
-                                    borderRadius: '10px',
-                                    margin: '10px'
-                                }}>{item.name}</Typography>
-                            </Grid>
-                        )
-                    })}
-                </Grid>
-            </Grid>
-
-            {/* ***********************BEST SELLERS************************** */}
-            <Grid container className="best-sellers-container" sx={{ marginBottom: '4rem' }}>
-                <Grid item xs={12} style={{ marginTop: '30px' }}>
-                    <div className="title" style={{
-                        backgroundColor: '#D9D9D9',
-                        padding: '5px'
-                    }}>
-                        <h1>BEST SELLERS</h1>
-                    </div>
-                </Grid>
-                <Grid container className="deal-of-the-day-cards" sx={{
-                    backgroundColor: '#D9D9D9',
-                    marginTop: '4rem',
-                    padding: '20px',
-                    margin: '20px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-
-                }}>
-                    {bestSellers.map((item, i) => {
-                        return (
-                            <Grid item>
-                                <ProductCard key={i} item={item} />
-                            </Grid>
-                        )
-                    })}
-                </Grid>
-            </Grid>
 
             <Footer />
         </div>
