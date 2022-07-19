@@ -4,7 +4,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
@@ -17,6 +16,8 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ArticleIcon from '@mui/icons-material/Article';
 import { Drawer } from '@mui/material';
 import SideDrawer from './SideDrawer';
+import logo from '../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -67,17 +68,18 @@ export default function Header() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+    const navigate = useNavigate();
+
+    const handleRoute = () => {
+        navigate('login')
+    } 
+
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
-    };
-
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
     };
 
     const handleMobileMenuOpen = (event) => {
@@ -99,10 +101,8 @@ export default function Header() {
                 horizontal: 'right',
             }}
             open={isMenuOpen}
-            onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleRoute}>Login</MenuItem>
         </Menu>
     );
 
@@ -180,14 +180,17 @@ export default function Header() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography
+                    <img onClick={() => {
+                        navigate('/');
+                    }} src={logo} alt='logo' style={{display: { xs: 'none', sm: 'block' }, width: '70px', height: '70px'}}/>
+                    {/* <Typography
                         variant="h6"
                         noWrap
                         component="div"
                         sx={{ display: { xs: 'none', sm: 'block' } }}
                     >
                         LOGO
-                    </Typography>
+                    </Typography> */}
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />

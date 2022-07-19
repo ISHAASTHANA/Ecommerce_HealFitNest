@@ -11,24 +11,29 @@ import ProdCategory from "../components/ProdCategory";
 import readyToEat from "../assets/readyToEat.jpg";
 import "./Category.css";
 import SubCategoryBtn from "../components/SubCategoryBtn";
+import { useParams } from "react-router-dom";
 
 const categories = [
   {
+    id: 0,
     categoryName: "Ready To Eat",
     subCategory: ["Fruits & Vegetables", "Snacks", "Beverages", "Dairy"],
     icon: <EmojiFoodBeverageIcon />,
   },
   {
+    id: 1,
     categoryName: "Grocery",
     subCategory: ["Spices", "Dry Fruits", "Flours & Oils", "Grains & Pulses"],
     icon: <GiFruitBowl />,
   },
   {
+    id: 2,
     categoryName: "Personal Care",
     subCategory: ["Face", "Hair", "Body"],
     icon: <MdFaceRetouchingNatural />,
   },
   {
+    id: 3,
     categoryName: "Home Essentials",
     subCategory: ["Bedroom", "Washroom", "Puja Room", "Garden"],
     icon: <GiBedLamp />,
@@ -51,18 +56,20 @@ const FireNav = styled(List)({
 
 export default function Category() {
   const [open, setOpen] = React.useState(true);
+  const { id } = useParams();
+
   return (
     <div className="category-container">
       <Header />
       <Grid container>
-        <Grid container className="category-image">
+        {/* <Grid container className="category-image">
           <div className="image">
             <img src={readyToEat} alt="category" />
           </div>
           <div className="desc">
             <h1>Ready to Eat</h1>
           </div>
-        </Grid>
+        </Grid> */}
 
         <Grid container className="banner-container">
           <Grid container className="button-container">

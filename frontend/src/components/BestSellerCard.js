@@ -1,6 +1,10 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import { Button, Card, CardMedia, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
 
 export default function BestSellerCard(props) {
+    const navigate = useNavigate();
+
     return (
         <Card elevation={6} sx={{ minWidth: 440, borderRadius: '10px', margin: 2 }}>
             <div style={{ position: 'relative' }}>
@@ -30,7 +34,9 @@ export default function BestSellerCard(props) {
                             Full Fresh Vegetable
                         </Typography>
                     </div>
-                    <Button variant="outlined" sx={{color: '#000', border: '1px solid #000'}}>Shop now</Button>
+                    <Button variant="outlined" onClick={() => {
+                         navigate(`/category/0}`)
+                    }} sx={{ color: '#000', border: '1px solid #000' }}>Shop now</Button>
                 </div>
             </div>
 

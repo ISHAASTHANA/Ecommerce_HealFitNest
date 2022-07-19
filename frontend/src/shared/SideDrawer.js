@@ -12,6 +12,7 @@ import EmojiFoodBeverageIcon from '@mui/icons-material/EmojiFoodBeverage';
 import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import FaceRetouchingNaturalIcon from '@mui/icons-material/FaceRetouchingNatural';
 import YardIcon from '@mui/icons-material/Yard';
+import { useNavigate } from 'react-router-dom';
 
 const itemData = [
   {
@@ -56,6 +57,8 @@ const FireNav = styled(List)({
 
 export default function CustomizedList() {
   const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ display: "flex" }}>
       <ThemeProvider
@@ -111,6 +114,9 @@ export default function CustomizedList() {
                     pt: 2.5,
                     pb: open ? 0 : 2.5,
                     "&:hover, &:focus": { "& svg": { opacity: open ? 1 : 0 } },
+                  }}
+                  onClick={() => {
+                    navigate(`/category/${item.id}`);
                   }}
                 >
                   <ListItemIcon sx={{ color: "inherit" }}>
