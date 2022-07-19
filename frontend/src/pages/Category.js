@@ -66,11 +66,12 @@ export default function Category() {
 
         <Grid container className="banner-container">
           <Grid container className="button-container">
-            <Grid xs={6} sm={3}>
+            <Grid xs={12}>
               <SubCategoryBtn />
-                      </Grid>
-                      
+            </Grid>
           </Grid>
+          <ProdCategory />
+          <ProdCategory />
           <ProdCategory />
         </Grid>
 

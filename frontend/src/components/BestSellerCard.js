@@ -18,22 +18,19 @@ export default function BestSellerCard(props) {
                     left: "20px",
                     padding: '20px',
                     width: '45%',
-                    textAlign: 'left',
+                    textAlign: 'right',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'start'
+                    justifyContent: 'center'
                 }}>
                     <div className="card-content" style={{ marginBottom: '10px' }}>
-                        <Typography variant="h6" sx={{ fontWeight: '600' }} color="text.secondary">
-                            Fruits & Vegetables
-                        </Typography>
-                        <Typography variant="body1">
-                            Onion, Potato, Tomato, Cabbage, Cauliflower, Bitter Guard, Ginger,
-                            Radish, Carrot, Beetroot
+                        <Typography variant="h6">-30% off</Typography>
+                        <Typography variant="h4" sx={{ fontWeight: '600' }} color="text.secondary">
+                            Full Fresh Vegetable
                         </Typography>
                     </div>
-                    <Button variant="contained">Shop now</Button>
+                    <Button variant="outlined" sx={{color: '#000', border: '1px solid #000'}}>Shop now</Button>
                 </div>
             </div>
 

@@ -18,7 +18,7 @@ export default function ProductCard(props) {
       <CardMedia
         component="img"
         alt={props.item.name}
-        height="240"
+        height="200"
         image={props.item.image}
       />
 

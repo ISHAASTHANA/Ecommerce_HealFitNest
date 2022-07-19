@@ -1,9 +1,9 @@
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
 import { Grid } from '@mui/material'
-import slider1 from "../assets/home1.jpg";
-import slider2 from "../assets/home2.jpg";
-import slider3 from "../assets/home3.jpg";
+import slider1 from "../assets/home.jpg";
+import slider2 from "../assets/home1.jpg";
+import slider3 from "../assets/home2.jpg";
 import './MovingCarousel.css';
 
 

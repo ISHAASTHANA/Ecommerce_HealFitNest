@@ -7,27 +7,28 @@ import category1 from "../assets/Fruits-and-Vegetables.jpg";
 import category2 from "../assets/beverages.jpg";
 import category3 from "../assets/dairy.png";
 import category4 from "../assets/ssnacks.jpg";
+import { Grid } from '@mui/material';
 
 const images = [
   {
     url: `${category1}`,
     title: 'Fruits & Vegetables',
-    width: '40%',
+    width: '100%',
   },
   {
     url: `${category2}`,
     title: 'Beverages',
-    width: '30%',
+    width: '100%',
   },
   {
     url: `${category3}`,
     title: 'Dairy',
-    width: '30%',
+    width: '100%',
   },
   {
     url: `${category4}`,
     title: 'Snacks',
-    width: '30%',
+    width: '100%',
   }
 ];
 
@@ -37,7 +38,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
   width: '100%',
   [theme.breakpoints.down('sm')]: {
     width: '100% !important', // Overrides inline-style
-    height: 100,
+    height: 80,
   },
   '&:hover, &.Mui-focusVisible': {
     zIndex: 1,
@@ -98,14 +99,14 @@ const ImageMarked = styled('span')(({ theme }) => ({
 
 export default function SubCategoryBtn() {
   return (
-    <Box sx={{ display: 'flex', minWidth: 300, width: '100%' }}>
+    // <Grid container >
+
+    <Box sx={{ display: 'flex', minWidth: 700, width: '100%', marginBottom: '20px' }}>
       {images.map((image) => (
         <ImageButton
           focusRipple
           key={image.title}
-          style={{
-            width: '100%',
-          }}
+          style={{width: image.width,}}
         >
           <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
@@ -127,6 +128,8 @@ export default function SubCategoryBtn() {
           </Image>
         </ImageButton>
       ))}
-    </Box>
+      </Box>
+      // </Grid>
+
   );
 }

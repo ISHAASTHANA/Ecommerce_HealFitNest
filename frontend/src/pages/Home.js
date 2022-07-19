@@ -25,8 +25,8 @@ export default function Home() {
     ]
 
     const bestSeller = [
-        { image: { bgImage }, title: 'Fruits & Vegetables', desc: 'Onion, Potato, Tomato, Cabbage, Cauliflower, Bitter Guard, Ginger, Radish, Carrot, Beetroot' },
-        { image: { bgImage2 }, title: 'Personal Care', desc: 'Rosewater, Body Mist, Face Cream, Face Cleanser, Aloevera Gel, Lip Balm, Hair Oil, Body Scrub' },
+        { image: { bgImage }, title: '-30% off', desc: 'Full Fresh Vegetable' },
+        { image: { bgImage2 }, title: '-35% off', desc: '100% Organic Food' }
     ]
 
 
@@ -57,10 +57,10 @@ export default function Home() {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        <BestSellerCard image={bgImage} />
+                        <BestSellerCard image={bgImage}  />
                     </Grid>
                     <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <BestSellerCard image={bgImage2} />
+                        <BestSellerCard image={bgImage2}  />
                     </Grid>
                 </Grid>
             </Grid>
