@@ -7,9 +7,11 @@ function App() {
     <div className="App">
       <Header/>
       <Product/>
+
       <Footer/>
     </div>
   );
 }
 
 export default App;
+{}
