@@ -1,84 +1,54 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import React from 'react'
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import logo from '../assets/logo.jpg';
+import Paper from '@mui/material/Paper';
+import Avatar from '@mui/material/Avatar';
+import LockIcon from '@mui/icons-material/Lock';
+import TextField from '@mui/material/TextField';
+import { FormGroup, Typography } from '@mui/material';
+import { FormControlLabel } from '@mui/material';
+import { Checkbox } from '@mui/material';
+import { Button, Link } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
-const theme = createTheme();
 
-export default function Login() {
+const Login = ({ handleChange }) => {
+
+  const paperStyle = { padding: 20, height: '70vh', width: 300, margin: '0' }
+  const avtstyle = { backgroundColor: 'rgb(15 155 66)' }
+  const btstyle = { margin: '10px 0', backgroundColor: '#39c06b' }
+  const psstyle = { margin: '15px 0' }
+  const navigate = useNavigate();
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}> */}
-            <img src={logo} alt='logo' width='150px' style={{borderRadius: '50%', border: '2px solid'}} />
-          {/* </Avatar> */}
-          <Typography component="h1" variant="h5" sx={{color: '#48632B', fontWeight: '600', mt:2}}>
-            Log In
+    <Grid container >
+      <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '2rem' }}>
+        <Paper elevation={10} style={paperStyle}>
+          <Grid item xs={12} align='center'>
+            <Avatar style={avtstyle}><LockIcon /></Avatar>
+            <h2>Log In</h2>
+          </Grid>
+
+          <TextField
+            required
+            id="outlined-required"
+            label="Username"
+            fullWidth
+          />
+          <TextField
+            required id="outlined-required" label="Password" type='password' style={psstyle} fullWidth />
+          <FormGroup>
+            <FormControlLabel control={<Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }} />} label="Remember me" />
+          </FormGroup>
+          <Button variant="contained" type='submit' style={btstyle} fullWidth>Log In</Button>
+          <Typography>
+            <Link href="/forgotPass">Forgot password?</Link>
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 1}}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: '#48632B'}}
-            >
-              Log In
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="#" variant="body2" color='#48632B'>
-                  {"New to HealthFitnest? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
-    </ThemeProvider>
-  );
+          <Typography> Don't have an account?
+            <Link onClick={() => navigate('/signup')}>Sign Up</Link>
+          </Typography>
+        </Paper>
+      </Grid>
+    </Grid>
+  )
 }
+export default Login;

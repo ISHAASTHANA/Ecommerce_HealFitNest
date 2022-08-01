@@ -1,6 +1,6 @@
 import MovingCarousel from "../components/MovingCarousel";
 import Header from "../shared/Header";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import potato from '../assets/potato.jpg';
 import walnuts from '../assets/walnuts.jpg';
 import bread from '../assets/Brown-Bread.png';
@@ -12,6 +12,8 @@ import ProductsBanner from "../components/ProductsBanner";
 import BestSellerCard from "../components/BestSellerCard";
 import bgImage from '../assets/BestSeller1.png';
 import bgImage2 from '../assets/BestSeller2.jpg';
+import quoteImage from '../assets/HealFitNest2.jpg';
+import './Home.css';
 
 
 export default function Home() {
@@ -44,29 +46,35 @@ export default function Home() {
 
             {/* ***********************BEST SELLERS************************** */}
             <Grid container className="container">
-                <Grid item xs={12}>
-                    <div className="title" >
+                {/* <Grid item xs={12}>
+                    <div className="title" style={{ display: 'flex', justifyContent: 'center' }}>
                         <div class="line"></div>
                         <h1 variant="h4">Best Seller</h1>
                         <div class="line"></div>
                     </div>
-                </Grid>
+                </Grid> */}
                 <Grid container className="banner-container">
-                    <Grid item xs={6} sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <BestSellerCard image={bgImage}  />
+                    <Grid item>
+                        <BestSellerCard image={bgImage} text={'Full Fresh Vegetable'} />
                     </Grid>
-                    <Grid item xs={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <BestSellerCard image={bgImage2}  />
+                    <Grid item>
+                        <BestSellerCard image={bgImage2} text={'Range of personal care products'} />
                     </Grid>
                 </Grid>
             </Grid>
 
             {/* *********************DEAL OF THE DAY************************** */}
-            <ProductsBanner type={'Deal of the Day'} />
+
+            <Grid container sx={{ m: 0, p: 0, backgroundColor: '#f8f8f8 ' }}>
+                <Grid item xs={12} className='image-container'>
+                    <img src='https://www.kindpng.com/picc/m/160-1609004_organic-food-vegetable-fruit-meat-organic-vegetables-png.png' className='quoteImage' alt='quote' />
+                    <Typography className="text" sx={{
+                        fontSize: '3rem', fontWeight: 600
+                    }}>"Let food be thy medicine, thy medicine shall be thy food."</Typography>
+                    <Typography variant="h5" className="text-author"><i>- Hippocartes</i></Typography>
+                </Grid>
+            </Grid>
+            <Footer />
             {/* <Grid container className="deal-of-the-day-container"
                 sx={{
                     display: 'flex',
@@ -107,7 +115,7 @@ export default function Home() {
             </Grid> */}
 
 
-            <Footer />
+
         </div>
 
     )

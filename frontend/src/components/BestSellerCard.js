@@ -1,4 +1,4 @@
-import { Button, Card, CardMedia, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardMedia, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 
@@ -6,7 +6,7 @@ export default function BestSellerCard(props) {
     const navigate = useNavigate();
 
     return (
-        <Card elevation={6} sx={{ minWidth: 440, borderRadius: '10px', margin: 2 }}>
+        <Card elevation={6} sx={{ minWidth: 540, borderRadius: '10px', margin: 2 }}>
             <div style={{ position: 'relative' }}>
                 <CardMedia
                     component="img"
@@ -18,7 +18,7 @@ export default function BestSellerCard(props) {
                 />
                 <div style={{
                     position: "absolute",
-                    top: 10,
+                    top: 25,
                     left: "20px",
                     padding: '20px',
                     width: '45%',
@@ -29,20 +29,25 @@ export default function BestSellerCard(props) {
                     justifyContent: 'center'
                 }}>
                     <div className="card-content" style={{ marginBottom: '10px' }}>
-                        <Typography variant="h6">-30% off</Typography>
                         <Typography variant="h4" sx={{ fontWeight: '600' }} color="text.secondary">
-                            Full Fresh Vegetable
+                            {props.text}
                         </Typography>
                     </div>
-                    <Button variant="outlined" onClick={() => {
-                         navigate(`/category/0}`)
-                    }} sx={{ color: '#000', border: '1px solid #000' }}>Shop now</Button>
+                    <CardActions>
+                        <Button variant="outlined" onClick={() => {
+                            navigate(`/category/0}`)
+                        }} sx={{
+                            color: '#000',
+                            border: '1px solid #000',
+                            "&:hover": {
+                                borderColor: '#000'
+                            }
+                        }}>Shop now</Button>
+                    </CardActions>
+
                 </div>
             </div>
 
-            {/* <CardActions sx={{ display: 'flex', justifyContent: 'space-between', background: '#f5f5f5' }}>
-                <Button size="small"></Button>
-            </CardActions> */}
         </Card>
     )
 }

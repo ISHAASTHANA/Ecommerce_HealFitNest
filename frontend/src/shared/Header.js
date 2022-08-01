@@ -12,9 +12,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ArticleIcon from '@mui/icons-material/Article';
-import { Drawer } from '@mui/material';
+import { alpha, Drawer } from '@mui/material';
 import SideDrawer from './SideDrawer';
 import logo from '../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
@@ -22,15 +20,15 @@ import { useNavigate } from 'react-router-dom';
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: '#D9D9D9',
+    border: '2px solid #c7d1d7',
+    backgroundColor: '#f4f6f8',
     '&:hover': {
-        backgroundColor: '#A9A9A9',
+        backgroundColor: '#e5e7e7',
     },
-    marginRight: theme.spacing(2),
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(3),
+        marginLeft: theme.spacing(1),
         width: 'auto',
     },
 }));
@@ -53,8 +51,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
-        [theme.breakpoints.up('md')]: {
+        [theme.breakpoints.up('sm')]: {
             width: '20ch',
+            '&:focus': {
+                width: '25ch',
+            },
         },
     },
 }));
@@ -71,8 +72,11 @@ export default function Header() {
     const navigate = useNavigate();
 
     const handleRoute = () => {
-        navigate('login')
-    } 
+        navigate('/login')
+    }
+    const handleUserRoute = () => {
+        navigate('/account')
+    }
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -103,6 +107,7 @@ export default function Header() {
             open={isMenuOpen}
         >
             <MenuItem onClick={handleRoute}>Login</MenuItem>
+            <MenuItem onClick={handleUserRoute}>My Profile</MenuItem>
         </Menu>
     );
 
@@ -123,18 +128,7 @@ export default function Header() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <IconButton size="large" aria-label="unknown" color="inherit">
-                    <ArticleIcon />
-                </IconButton>
-                <p>Unknown label</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton size="large" aria-label="favourites" color="inherit">
-                    <FavoriteIcon />
-                </IconButton>
-                <p>Favourites</p>
-            </MenuItem>
+
             <MenuItem>
                 <IconButton
                     size="large"
@@ -155,7 +149,7 @@ export default function Header() {
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                <p>User</p>
             </MenuItem>
         </Menu>
     );
@@ -182,7 +176,7 @@ export default function Header() {
                     </IconButton>
                     <img onClick={() => {
                         navigate('/');
-                    }} src={logo} alt='logo' style={{display: { xs: 'none', sm: 'block' }, width: '70px', height: '70px'}}/>
+                    }} src={logo} alt='logo' style={{ display: { xs: 'none', sm: 'block' }, width: '70px', height: '70px' }} />
                     {/* <Typography
                         variant="h6"
                         noWrap
@@ -191,6 +185,8 @@ export default function Header() {
                     >
                         LOGO
                     </Typography> */}
+
+                    <Box sx={{ flexGrow: 1 }} />
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -200,20 +196,15 @@ export default function Header() {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton size="large" aria-label="unknown" color="inherit">
-                            <ArticleIcon />
-                        </IconButton>
-                        <IconButton size="large" aria-label="favourites" color="inherit">
-                            <FavoriteIcon />
-                        </IconButton>
+
                         <IconButton
                             size="large"
                             aria-label="add to shopping cart"
                             color="inherit"
+                            onClick={() => { navigate('/cart') }}
                         >
-                            <AddShoppingCartIcon />
+                            <AddShoppingCartIcon fontSize='larger' />
                         </IconButton>
                         <IconButton
                             size="large"
@@ -224,7 +215,7 @@ export default function Header() {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <AccountCircle fontSize='larger' />
                         </IconButton>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -247,5 +238,5 @@ export default function Header() {
                 <SideDrawer setDrawerOpen={setDrawerOpen} />
             </Drawer>
         </Box>
-  );
+    );
 }
