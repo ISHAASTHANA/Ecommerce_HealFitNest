@@ -8,33 +8,81 @@ import category2 from "../assets/beverages.jpg";
 import category3 from "../assets/dairy.png";
 import category4 from "../assets/ssnacks.jpg";
 import { Grid } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const images = [
+const categoryData = [
   {
-    url: `${category1}`,
-    title: 'Fruits & Vegetables',
-    width: '100%',
+    name: 'Ready To Eat', subCategory: [
+      {
+        url: `${category1}`,
+        title: 'Fruits & Vegetables',
+        width: '100%',
+      },
+      {
+        url: `${category2}`,
+        title: 'Beverages',
+        width: '100%',
+      },
+      {
+        url: `${category3}`,
+        title: 'Dairy',
+        width: '100%',
+      },
+      {
+        url: `${category4}`,
+        title: 'Snacks',
+        width: '100%',
+      }
+    ]
   },
   {
-    url: `${category2}`,
-    title: 'Beverages',
-    width: '100%',
-  },
-  {
-    url: `${category3}`,
-    title: 'Dairy',
-    width: '100%',
-  },
-  {
-    url: `${category4}`,
-    title: 'Snacks',
-    width: '100%',
+    name: 'Personal Care', subCategory: [
+      {
+        url: 'https://media.vogue.in/wp-content/uploads/2021/10/Shankara1.jpg',
+        title: 'Face',
+        width: '100%',
+      },
+      {
+        url: 'https://lh3.googleusercontent.com/bIkCy-pRQAY8zlCY9yj4r8ua8ndoxZUxA9y5mUWs66syAV42rNYAdcWmqKY6hd5PNH2tSbAJ7auBvWNC6T-HXdrM6Sh3oRQST1oIDUM8=w1000',
+        title: 'Body',
+        width: '100%',
+      },
+      {
+        url: 'https://cdn.aarp.net/content/dam/aarp/entertainment/beauty-and-style/2020/04/1140-hair-products-on-table.jpg',
+        title: 'Hair',
+        width: '100%',
+      }
+    ]
   }
-];
+
+]
+
+// const images = [
+//   {
+//     url: `${category1}`,
+//     title: 'Fruits & Vegetables',
+//     width: '100%',
+//   },
+//   {
+//     url: `${category2}`,
+//     title: 'Beverages',
+//     width: '100%',
+//   },
+//   {
+//     url: `${category3}`,
+//     title: 'Dairy',
+//     width: '100%',
+//   },
+//   {
+//     url: `${category4}`,
+//     title: 'Snacks',
+//     width: '100%',
+//   }
+// ];
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
-    height: 200,
+  height: 200,
   width: '100%',
   [theme.breakpoints.down('sm')]: {
     width: '100% !important', // Overrides inline-style
@@ -98,39 +146,52 @@ const ImageMarked = styled('span')(({ theme }) => ({
 }));
 
 
-export default function SubCategoryBtn() {
+export default function SubCategoryBtn(props) {
+  const navigate = useNavigate();
+  const params = useParams();
+
   return (
     // <Grid container >
 
-    <Box sx={{ display: 'flex', minWidth: 700, width: '100%', marginBottom: '20px' }}>
-      {images.map((image) => (
-        <ImageButton
-          focusRipple
-          key={image.title}
-          style={{width: image.width,}}
-        >
-          <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
-          <ImageBackdrop className="MuiImageBackdrop-root" />
-          <Image>
-            <Typography
-              component="span"
-              variant="subtitle1"
-              color="inherit"
-              sx={{
-                position: 'relative',
-                p: 4,
-                pt: 2,
-                pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-              }}
-            >
-              {image.title}
-              <ImageMarked className="MuiImageMarked-root" />
-            </Typography>
-          </Image>
-        </ImageButton>
-      ))}
-      </Box>
-      // </Grid>
+    <Grid container>
+      {categoryData.map((data) => {
+        if (data.name == props.category) {
+          return (
+            <Box sx={{ display: 'flex', minWidth: 700, width: '100%', marginBottom: '20px' }}>
+              {
+                data.subCategory.map((image) => (
+                  <ImageButton
+                    focusRipple
+                    key={image.title}
+                    style={{ width: image.width, }}
+                    onClick={()=> navigate(`${image.title}`)}
+                  >
+                    <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
+                    <ImageBackdrop className="MuiImageBackdrop-root" />
+                    <Image>
+                      <Typography
+                        component="span"
+                        variant="subtitle1"
+                        color="inherit"
+                        sx={{
+                          position: 'relative',
+                          p: 4,
+                          pt: 2,
+                          pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                        }}
+                      >
+                        {image.title}
+                        <ImageMarked className="MuiImageMarked-root" />
+                      </Typography>
+                    </Image>
+                  </ImageButton>
+                ))}
+            </Box>
+
+          )
+        }
+      })}
+    </Grid>
 
   );
 }

@@ -6,6 +6,11 @@ import Login from './pages/Login';
 import Category from './pages/Category';
 import Product from './pages/IndividualProduct';
 import Signup from './pages/SignUp';
+import UserAccount from './pages/UserAccount';
+import Cart from './pages/Cart';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
+import Subcategory from './pages/Subcategory';
 
 function App() {
   return (
@@ -13,11 +18,16 @@ function App() {
       {/* <Home /> */}
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='login' element={<Login />} />
-        <Route path='/signup' element={<Signup/>}/>
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/forgotPass' element={<ForgotPassword />} />
+        <Route path='/reset' element={<ResetPassword/>}/>
         {/* <Route path='/category' element={<Category />} /> */}
-        <Route path='category/:id' element={<Category />} />
-        <Route path='product' element={<Product />} />
+        <Route path='categories/:categoryName' element={<Category />} />
+        <Route path='categories/:categoryName/:subCategoryName' element={<Subcategory />} />
+        <Route path='item/:itemName' element={<Product />} />
+        <Route path='/account' element={<UserAccount />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
     </div>
   );

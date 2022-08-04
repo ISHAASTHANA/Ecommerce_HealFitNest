@@ -12,6 +12,8 @@ import readyToEat from "../assets/readyToEat.jpg";
 import "./Category.css";
 import SubCategoryBtn from "../components/SubCategoryBtn";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useEffect } from "react";
 
 const categories = [
   {
@@ -53,10 +55,31 @@ const FireNav = styled(List)({
     fontSize: 20,
   },
 });
+const baseUrl = 'http://localhost:8989/api/v7';
 
 export default function Category() {
-  const [open, setOpen] = React.useState(true);
-  const { id } = useParams();
+  // const [open, setOpen] = React.useState(true);
+  // const { id } = useParams();
+  const [currentCategory, setCurrentCategory] = React.useState('');
+  const [subCategory, setSubCategory] = React.useState([]);
+  const params = useParams();
+
+  useEffect(() => {
+    axios.get(`${baseUrl}/categories/${params.categoryName}`).then((response) => {
+      setCurrentCategory(params.categoryName);
+      console.log(currentCategory);
+      setSubCategory(response.data)
+    }).catch(error => {
+      if (!error.response) {
+        // network error
+        console.log('Error: Network Error');
+      } else {
+        console.log(error.response);
+      }
+    })
+  }, [])
+  // console.log("Data", data.subCategory);
+
 
   return (
     <div className="category-container">
@@ -74,12 +97,14 @@ export default function Category() {
         <Grid container className="banner-container">
           <Grid container className="button-container">
             <Grid xs={12}>
-              <SubCategoryBtn />
+              <SubCategoryBtn category={currentCategory} />
             </Grid>
           </Grid>
-          <ProdCategory />
-          <ProdCategory />
-          <ProdCategory />
+          {subCategory.map((item, i) => {
+            return (
+              <ProdCategory subCategory={item} />
+            )
+          })}
         </Grid>
 
         {/* <Grid container sm={3} sx={{ padding: "10px" }}>
