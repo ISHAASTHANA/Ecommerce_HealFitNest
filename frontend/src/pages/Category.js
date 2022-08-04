@@ -60,11 +60,14 @@ const baseUrl = 'http://localhost:8989/api/v7';
 export default function Category() {
   // const [open, setOpen] = React.useState(true);
   // const { id } = useParams();
-  const [subCategory, setSubCategory] = React.useState([])
+  const [currentCategory, setCurrentCategory] = React.useState('');
+  const [subCategory, setSubCategory] = React.useState([]);
   const params = useParams();
 
   useEffect(() => {
     axios.get(`${baseUrl}/categories/${params.categoryName}`).then((response) => {
+      setCurrentCategory(params.categoryName);
+      console.log(currentCategory);
       setSubCategory(response.data)
     }).catch(error => {
       if (!error.response) {
@@ -75,10 +78,10 @@ export default function Category() {
       }
     })
   }, [])
-    // console.log("Data", data.subCategory);
+  // console.log("Data", data.subCategory);
 
 
-return (
+  return (
     <div className="category-container">
       <Header />
       <Grid container>
@@ -94,7 +97,7 @@ return (
         <Grid container className="banner-container">
           <Grid container className="button-container">
             <Grid xs={12}>
-              <SubCategoryBtn />
+              <SubCategoryBtn category={currentCategory} />
             </Grid>
           </Grid>
           {subCategory.map((item, i) => {

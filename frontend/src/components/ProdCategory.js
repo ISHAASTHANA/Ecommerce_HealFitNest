@@ -55,7 +55,7 @@ export default function ProdCategory(data) {
         // console.log("Data", data.subCategory);
         axios.get(`${baseUrl}/categories/${params.categoryName}/${data.subCategory}`).then((response) => {
             setState({
-                products: response.data.slice(0,2)
+                products: response.data
             })
         }).catch(error => {
                     if (!error.response) {

@@ -47,10 +47,10 @@ export default function Categories() {
 
                             <img
                                 onClick={() => {
-                                    navigate(`/categories/${item.categoryName}}`)
+                                    navigate(`/categories/${item.categoryName}`)
                                 }}
                                 style={{ width: '150px', height: '150px', borderRadius: '50%', objectFit: 'cover', cursor: 'pointer' }}
-                                key={i} src={item.image}
+                                key={i} src={item.categoryImage}
                                 alt={item.categoryName} />
 
                             <Typography variant="h5" onClick={() => {

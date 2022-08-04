@@ -10,6 +10,7 @@ import UserAccount from './pages/UserAccount';
 import Cart from './pages/Cart';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
+import Subcategory from './pages/Subcategory';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/reset' element={<ResetPassword/>}/>
         {/* <Route path='/category' element={<Category />} /> */}
         <Route path='categories/:categoryName' element={<Category />} />
+        <Route path='categories/:categoryName/:subCategoryName' element={<Subcategory />} />
         <Route path='item/:itemName' element={<Product />} />
         <Route path='/account' element={<UserAccount />} />
         <Route path='/cart' element={<Cart />} />
