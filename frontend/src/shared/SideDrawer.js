@@ -26,15 +26,15 @@ const itemData = [
   },
   {
     id: 1,
-    categoryName: "Groceries",
-    subCategory: ["Spices", "Dry Fruits", "Flours & Oils", "Grains & Pulses"],
-    icon: <LocalGroceryStoreIcon />,
+    categoryName: "Personal Care",
+    subCategory: ["Face", "Hair", "Body"],
+    icon: <FaceRetouchingNaturalIcon />,
   },
   {
     id: 2,
-    categoryName: "Personal Care",
-    subCategory: ["Face Care", "Hair Care", "Body Care"],
-    icon: <FaceRetouchingNaturalIcon />,
+    categoryName: "Groceries",
+    subCategory: ["Spices", "Dry Fruits", "Flours & Oils", "Grains & Pulses"],
+    icon: <LocalGroceryStoreIcon />,
   },
   {
     id: 3,
@@ -60,12 +60,15 @@ const FireNav = styled(List)({
 
 export default function CustomizedList() {
   const [state, setState] = React.useState(null);
-  const [open, setOpen] = React.useState(false)
+  const [isOpenCollapse, setIsOpenCollapse] = React.useState(null);
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    // console.log(key);
-    // setState(setOpen(!open));
+  const handleOpen = (clickedIndex) => {
+    if (isOpenCollapse === clickedIndex) {
+      setIsOpenCollapse(null);
+    } else {
+      setIsOpenCollapse(clickedIndex);
+    }
   };
 
   return (
@@ -130,6 +133,7 @@ export default function CustomizedList() {
                         "& svg": { opacity: state ? 1 : 0 },
                       },
                     }}
+                    onClick = {()=> handleOpen(index)}
                     
                   >
                     <ListItemIcon sx={{ color: "inherit" }}>
@@ -155,12 +159,13 @@ export default function CustomizedList() {
                       }}
                       sx={{ my: 0 }}
                     />
-                    {open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                    {isOpenCollapse === index ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                   </ListItemButton>
-                  <Collapse in={open} timeout="auto" unmountOnExit>
+                  <Collapse in={isOpenCollapse === index} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                       {item.subCategory.map((data, i) => (
                         <ListItemButton
+                          onClick={()=>navigate(`/categories/${item.categoryName}/${data}`)}
                           sx={{
                             py: 0,
                             minHeight: 32,
