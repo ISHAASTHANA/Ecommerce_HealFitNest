@@ -4,6 +4,8 @@ import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProdCategory from '../components/ProdCategory';
 import ProductCard from '../components/ProductCard';
+import Footer from '../shared/Footer';
+import Header from '../shared/Header';
 
 const baseUrl = 'http://localhost:8989/api/v7';
 
@@ -29,6 +31,7 @@ const Subcategory = () => {
 
     return (
         <div>
+            <Header />
             <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
                 {/* {if()} */}
                 {products.map((item, i) => {
@@ -40,6 +43,7 @@ const Subcategory = () => {
                     )
                 })}
             </Grid>
+            <Footer />
         </div>
     );
 };

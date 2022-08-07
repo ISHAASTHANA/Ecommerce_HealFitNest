@@ -52,11 +52,16 @@ export default function ProdCategory(data) {
     const params = useParams();
 
     useEffect(() => {
-        // console.log("Data", data.subCategory);
         axios.get(`${baseUrl}/categories/${params.categoryName}/${data.subCategory}`).then((response) => {
-            setState({
-                products: response.data
-            })
+            if (params.categoryName) {
+                setState({
+                    products: response.data.slice(0,3)
+                })
+            } else {
+                setState({
+                    products: response.data
+                })
+            }
         }).catch(error => {
                     if (!error.response) {
                         // network error
@@ -88,10 +93,6 @@ export default function ProdCategory(data) {
 
     return (
         <div className="category-container">
-            {/* // <ProductCard category={ } key={i} />
-                    // {category.subCategory.fruitVeggies.map((product, i) => { */}
-            {/* //     <ProductCard item={product} key={i} /> */}
-            {/* // }) } */}
 
             <Grid container style={{
                 display: 'flex',
