@@ -12,15 +12,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { alpha, Drawer } from '@mui/material';
+import { Drawer } from '@mui/material';
 import SideDrawer from './SideDrawer';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo.jpeg';
 import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
-    border: '2px solid #c7d1d7',
+    border: '2px     #c7d1d7',
     backgroundColor: '#f4f6f8',
     '&:hover': {
         backgroundColor: '#e5e7e7',
@@ -35,7 +35,7 @@ const Search = styled('div')(({ theme }) => ({
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
-    height: '100%',
+    height: '90%',
     position: 'absolute',
     pointerEvents: 'none',
     display: 'flex',
@@ -131,7 +131,6 @@ export default function Header() {
 
             <MenuItem>
                 <IconButton
-                    size="large"
                     aria-label="add to shopping cart"
                     color="inherit"
                 >
@@ -141,7 +140,6 @@ export default function Header() {
             </MenuItem>
             <MenuItem onClick={handleProfileMenuOpen}>
                 <IconButton
-                    size="large"
                     aria-label="account of current user"
                     aria-controls="primary-search-account-menu"
                     aria-haspopup="true"
@@ -163,7 +161,6 @@ export default function Header() {
             }}>
                 <Toolbar>
                     <IconButton
-                        size="large"
                         edge="start"
                         color="inherit"
                         aria-label="open drawer"
@@ -176,7 +173,7 @@ export default function Header() {
                     </IconButton>
                     <img onClick={() => {
                         navigate('/');
-                    }} src={logo} alt='logo' style={{ display: { xs: 'none', sm: 'block' }, width: '70px', height: '70px' }} />
+                    }} src={logo} alt='logo' style={{ display: { xs: 'none', sm: 'block' }, width: '160px', height: '60px', objectFit: 'cover' }} />
                     {/* <Typography
                         variant="h6"
                         noWrap
@@ -199,7 +196,6 @@ export default function Header() {
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
                         <IconButton
-                            size="large"
                             aria-label="add to shopping cart"
                             color="inherit"
                             onClick={() => { navigate('/cart') }}
@@ -207,7 +203,6 @@ export default function Header() {
                             <AddShoppingCartIcon fontSize='larger' />
                         </IconButton>
                         <IconButton
-                            size="large"
                             edge="end"
                             aria-label="account of current user"
                             aria-controls={menuId}
@@ -220,7 +215,6 @@ export default function Header() {
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
-                            size="large"
                             aria-label="show more"
                             aria-controls={mobileMenuId}
                             aria-haspopup="true"

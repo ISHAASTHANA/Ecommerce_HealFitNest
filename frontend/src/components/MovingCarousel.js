@@ -10,10 +10,10 @@ import './MovingCarousel.css';
 export default function MovingCarousel() {
     const items = [
         {
-            image: `${slider1}`, title: 'Healthy you', desc: 'happy Us'
+            image: 'https://img.freepik.com/free-photo/concept-gift-with-basket-cosmetics-beige-background_185193-68915.jpg?t=st=1659692994~exp=1659693594~hmac=764caefc8568f47994e8301bbe1f5ba2e005f33b0ad921683e208b35d85f52a3'
         },
         {
-            image: `${slider3}`, title: 'Aromatic Spices', desc: 'to flavour your dishes'
+            image: 'https://img.freepik.com/free-photo/top-view-assortment-vegetables-paper-bag_23-2148853335.jpg?t=st=1659693217~exp=1659693817~hmac=64207f320196e072a2f485beca546aa7a59103886cd837b8d115e2613290ed8a', title: 'Healthy you', desc: 'happy Us'
         },
         {
             image: `${slider2}`, title: 'The best ', desc: 'in quality'

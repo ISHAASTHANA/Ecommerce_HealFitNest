@@ -2,6 +2,16 @@ import React from 'react'
 import { Grid, Paper, Avatar, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, FormGroup, Checkbox, Button } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+const data = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    contact: ''
+}
+
 
 const Signup = () => {
     const paperStyle = { padding: 20, height: '70vh', width: 300, margin: '0' }
@@ -12,10 +22,45 @@ const Signup = () => {
     const marginTop = { marginTop: 5 }
     const btstyle = { margin: '10px 0', backgroundColor: 'rgb(15 155 66)' }
 
+    const [user, setUser] = React.useState(data);
+    const [errors, setErrors] = React.useState({});
+    const [isSubmit, setIsSubmit] = React.useState(false);
     const navigate = useNavigate();
 
-    return (
+    const handleChange = (event) => {
+        const { name, value } = event.target
+        setUser({
+            ...user,
+            [name]: value
+        })
+    }
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setErrors(validate(user));
+        setIsSubmit(true);
+    }
+
+    React.useEffect(() => {
+        console.log(errors);
+        if (Object.keys(errors).length === 0 && isSubmit) {
+            console.log(user);
+        }
+    }, [errors])
+
+    const validate = (values) => {
+        const error = {}
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        if (!values.email) {
+            error.email = 'Email is required!'
+        }
+        if (!values.password) {
+            error.password = 'Password is required!'
+        }
+        return error;
+    };
+
+    return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '2rem' }}>
             <Paper elevation={10} style={paperStyle}>
                 <Grid align='center'>
@@ -31,8 +76,11 @@ const Signup = () => {
                             fullWidth
                             id="firstName"
                             label="First Name"
+                            onChange={handleChange}
+                            value={user.firstName}
                             autoFocus
                         />
+                        <small id='firstname_error'></small>
                     </Grid>
                     <Grid item xs={12} sm={6} style={tystyle}>
                         <TextField
@@ -41,16 +89,24 @@ const Signup = () => {
                             id="lastName"
                             label="Last Name"
                             name="lastName"
+                            onChange={handleChange}
+                            value={user.lastName}
                             autoComplete="family-name"
                         />
+                        <small id='lastname_error'></small>
                     </Grid>
                 </Grid>
                 <TextField
                     required
-                    id="outlined-required"
+                    id="email"
                     label="Email address"
+                    name="email"
                     fullWidth
+                    onChange={handleChange}
+                    value={user.email}
+                    style={tystyle}
                 />
+                <small id='email_error'></small>
                 <FormControl component="fieldset" style={marginTop}>
                     <FormLabel component="legend">Gender</FormLabel>
                     <RadioGroup aria-label="gender" name="gender" size="small" style={{ display: 'initial' }}>
@@ -60,21 +116,27 @@ const Signup = () => {
                 </FormControl>
                 <TextField style={nystyle}
                     required
-                    id="outlined-required"
+                    id="contact"
+                    type='tel'
                     label="Phone number"
+                    name="contact"
+                    onChange={handleChange}
+                    value={user.contact}
                     fullWidth
                 />
-                <TextField style={nystyle}
+                <small id='phonenumber_error'></small>
+                <TextField
                     required
-                    id="outlined-required"
+                    id="password"
                     label="Password"
                     type="password"
+                    name="password"
+                    onChange={handleChange}
+                    value={user.password}
                     fullWidth
                 />
-                <FormGroup>
-                    <FormControlLabel control={<Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 20 } }} />} label="I accept the terms and conditions" />
-                </FormGroup>
-                <Button variant="contained" type='submit' style={btstyle} fullWidth onClick={() => navigate('/')}>Sign Up</Button>
+                <small id='password_error'></small>
+                <Button variant="contained" type='submit' onClick={handleSubmit} style={btstyle} fullWidth>Sign Up</Button>
             </Paper>
         </Grid>
     )
