@@ -35,7 +35,11 @@ export default function BestSellerCard(props) {
                     </div>
                     <CardActions>
                         <Button variant="outlined" onClick={() => {
-                            navigate(`/category/0}`)
+                            if (props.id == 0) {
+                                navigate('/categories/Ready To Eat/Fruits & Vegetables')
+                            } else {
+                                navigate('/categories/Personal Care')
+                            }
                         }} sx={{
                             color: '#000',
                             border: '1px solid #000',

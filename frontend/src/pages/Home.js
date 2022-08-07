@@ -55,10 +55,10 @@ export default function Home() {
                 </Grid> */}
                 <Grid container className="banner-container">
                     <Grid item>
-                        <BestSellerCard image={bgImage} text={'Full Fresh Vegetable'} />
+                        <BestSellerCard image={bgImage} id="0" text={'Full Fresh Vegetable'} />
                     </Grid>
                     <Grid item>
-                        <BestSellerCard image={bgImage2} text={'Range of personal care products'} />
+                        <BestSellerCard image={bgImage2} id="1" text={'Range of personal care products'} />
                     </Grid>
                 </Grid>
             </Grid>
