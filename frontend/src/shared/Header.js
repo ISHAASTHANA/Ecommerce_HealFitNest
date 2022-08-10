@@ -11,7 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import { Drawer } from '@mui/material';
 import SideDrawer from './SideDrawer';
 import logo from '../assets/logo.jpeg';
@@ -134,7 +134,7 @@ export default function Header() {
                     aria-label="add to shopping cart"
                     color="inherit"
                 >
-                    <AddShoppingCartIcon />
+                    <ShoppingCartRoundedIcon />
                 </IconButton>
                 <p>Add to Cart</p>
             </MenuItem>
@@ -198,9 +198,9 @@ export default function Header() {
                         <IconButton
                             aria-label="add to shopping cart"
                             color="inherit"
-                            onClick={() => { navigate('/cart') }}
+                            onClick={() => { navigate('/cart/62ee9c90a05e8e657c087cc8') }}
                         >
-                            <AddShoppingCartIcon fontSize='larger' />
+                            <ShoppingCartRoundedIcon fontSize='larger' />
                         </IconButton>
                         <IconButton
                             edge="end"

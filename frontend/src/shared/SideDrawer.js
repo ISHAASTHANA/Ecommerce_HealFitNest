@@ -14,8 +14,8 @@ import FaceRetouchingNaturalIcon from "@mui/icons-material/FaceRetouchingNatural
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import YardIcon from "@mui/icons-material/Yard";
-import { useNavigate } from "react-router-dom";
-import { Collapse, ListItem } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
+import { Collapse } from "@mui/material";
 
 const itemData = [
   {
@@ -165,7 +165,10 @@ export default function CustomizedList() {
                     <List component="div" disablePadding>
                       {item.subCategory.map((data, i) => (
                         <ListItemButton
-                          onClick={()=>navigate(`/categories/${item.categoryName}/${data}`)}
+                          onClick={() => {
+                            navigate(`/categories/${item.categoryName}/${data}`)
+                            navigate(0)
+                          }}
                           sx={{
                             py: 0,
                             minHeight: 32,
