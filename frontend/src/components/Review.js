@@ -3,7 +3,9 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
+import { UserContext } from '../App';
 import Grid from '@mui/material/Grid';
+import axios from 'axios';
 
 const products = [
   {
@@ -30,7 +32,20 @@ const payments = [
   { name: 'Cash on Delivery', Total: 'Rs.600' },
 ];
 
+const baseUrl = 'http://localhost:8989/api';
+
 export default function Review() {
+
+  let { userId, setUserId } = React.useContext(UserContext);
+  const [orderData, setOrderData] = React.useState();
+
+  React.useEffect(() => {
+
+    axios.get(`${baseUrl}/v6/orderUser/${userId}`).then((res) => {
+      console.log(res.data);
+    })
+  }, []);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

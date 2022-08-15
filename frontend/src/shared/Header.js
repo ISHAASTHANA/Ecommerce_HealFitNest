@@ -12,10 +12,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import { Drawer } from '@mui/material';
+import { Autocomplete, Drawer, TextField } from '@mui/material';
 import SideDrawer from './SideDrawer';
 import logo from '../assets/logo.jpeg';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import CartContext from '../contexts/CartContext';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -68,6 +70,8 @@ export default function Header() {
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    let { cartId, setCartId } = React.useContext(CartContext);
+
 
     const navigate = useNavigate();
 
@@ -152,6 +156,17 @@ export default function Header() {
         </Menu>
     );
 
+    const [searchItem, setSearchItem] = React.useState('');
+    const handleSearch = (event) => {
+        setSearchItem(event.target.value)
+        console.log(searchItem);
+
+        axios.get(`http://localhost:8989/api/v1/search/${searchItem}`).then((res) => {
+            console.log(res);
+            return(res.data);
+        })
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }} >
             <AppBar position="static" style={{
@@ -184,8 +199,26 @@ export default function Header() {
                     </Typography> */}
 
                     <Box sx={{ flexGrow: 1 }} />
-                    <Search>
-                        <SearchIconWrapper>
+                    {/* <Autocomplete
+                        freeSolo
+                        id="free-solo-2-demo"
+                        disableClearable
+                        options={handleSearch}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Search input"
+                                InputProps={{
+                                    ...params.InputProps,
+                                    type: 'search',
+                                }}
+                            />
+                        )}
+                    /> */}
+                    <Search value={searchItem}
+                            onChange={handleSearch} >
+                        <SearchIconWrapper 
+                        >
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
@@ -198,7 +231,7 @@ export default function Header() {
                         <IconButton
                             aria-label="add to shopping cart"
                             color="inherit"
-                            onClick={() => { navigate('/cart/62ee9c90a05e8e657c087cc8') }}
+                            onClick={() => { navigate(`/cart/${cartId}`) }}
                         >
                             <ShoppingCartRoundedIcon fontSize='larger' />
                         </IconButton>

@@ -40,7 +40,7 @@ const IndividualProduct = () => {
     useEffect(() => {
         axios.get(`${baseUrl}/v1/item/${itemName}`).then((res) => {
             setProduct(res.data)
-            if (product.itemAvailable) {
+            if (product.itemAvailable == true) {
                 setItemAvailable('Available')
             } else {
                 setItemAvailable('Sold Out')
@@ -59,6 +59,7 @@ const IndividualProduct = () => {
         if (cartId === '') {
             axios.post(`${baseUrl}/v4/addToCart/${userId}/${product.itemId}/${count}`).then((res) => {
                 setCartId(res.data);
+                console.log(res);
                 console.log("CartId:", cartId);
             }).catch(error => {
                 if (!error.response) {
@@ -70,6 +71,7 @@ const IndividualProduct = () => {
         } else {
             axios.put(`${baseUrl}/v4/updateCart/${cartId}/${product.itemId}/${count}`).then((res) => {
                 console.log('Update cart response: ', res);
+                console.log("CartId:", cartId);
             }).catch(error => {
                 if (!error.response) {
                     console.log('Error: Network Error');

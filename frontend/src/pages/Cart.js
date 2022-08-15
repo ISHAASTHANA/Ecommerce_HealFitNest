@@ -7,8 +7,12 @@ import "./Button.css";
 import "./Cart.css";
 import { useState } from "react";
 import { useEffect } from "react";
-import axios from 'axios';
-import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useNavigate, useParams } from "react-router-dom";
+import Header from "../shared/Header.js";
+import { useContext } from "react";
+import CartContext from "../contexts/CartContext.js";
+import { UserContext } from "../App.js";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -24,32 +28,6 @@ const commonStyles = {
   height: "5rem",
 };
 
-{
-  /*const products=[
-    {
-        id:1,
-        name: 'Cherry',
-        quantity: 3,
-        image:"https://media.istockphoto.com/photos/cherry-trio-with-stem-and-leaf-picture-id157428769?b=1&k=20&m=157428769&s=170667a&w=0&h=F1PxAjsNGhS0svv0t_kMRYdAE3UGISZD_BY066-SubU=",
-        price:200
-    },
-    {
-        id:2,
-        name:'Almonds',
-        quantity:2,
-        image:"https://media.istockphoto.com/photos/almonds-picture-id153711056?b=1&k=20&m=153711056&s=170667a&w=0&h=8exR9-QE1WweR4ijYM7XdlELsrKBYLQyi7ILRexnHg4=",
-        price :100
-    },
-    {
-        id:3,
-        name:'Onions',
-        quantity:1,
-        image:'https://media.istockphoto.com/photos/red-onion-slice-picture-id175448479?b=1&k=20&m=175448479&s=170667a&w=0&h=kcjadYpPSifmgaESFhA7EKVMdLmL-pXPhrwSvJM0o2U=',
-        price : 200
-    }
-  ];
-*/
-}
 const summary = [
   {
     name: "Items price",
@@ -57,51 +35,56 @@ const summary = [
   },
 ];
 
-const baseUrl = 'http://localhost:8989/api';
-
+const baseUrl = "http://localhost:8989/api";
 
 export default function Cart() {
   const { cartId } = useParams();
   const [cartData, setCartData] = useState({});
-  const [item, setItem] = useState('');
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: "Cherry",
-      quantity: 1,
-      image:
-        "https://media.istockphoto.com/photos/cherry-trio-with-stem-and-leaf-picture-id157428769?b=1&k=20&m=157428769&s=170667a&w=0&h=F1PxAjsNGhS0svv0t_kMRYdAE3UGISZD_BY066-SubU=",
-      price: 200,
-    },
-    {
-      id: 2,
-      name: "Almonds",
-      quantity: 1,
-      image:
-        "https://media.istockphoto.com/photos/almonds-picture-id153711056?b=1&k=20&m=153711056&s=170667a&w=0&h=8exR9-QE1WweR4ijYM7XdlELsrKBYLQyi7ILRexnHg4=",
-      price: 100,
-    },
-    {
-      id: 3,
-      name: "Onions",
-      quantity: 1,
-      image:
-        "https://media.istockphoto.com/photos/red-onion-slice-picture-id175448479?b=1&k=20&m=175448479&s=170667a&w=0&h=kcjadYpPSifmgaESFhA7EKVMdLmL-pXPhrwSvJM0o2U=",
-      price: 200,
-    },
-  ]);
+  const [item, setItem] = useState("");
+  const navigate = useNavigate();
+  let { userId, setUserId } = useContext(UserContext); 
+
+  // const [cart, setCart] = useState([
+  //   {
+  //     id: 1,
+  //     name: "Cherry",
+  //     quantity: 1,
+  //     image:
+  //       "https://media.istockphoto.com/photos/cherry-trio-with-stem-and-leaf-picture-id157428769?b=1&k=20&m=157428769&s=170667a&w=0&h=F1PxAjsNGhS0svv0t_kMRYdAE3UGISZD_BY066-SubU=",
+  //     price: 200,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Almonds",
+  //     quantity: 1,
+  //     image:
+  //       "https://media.istockphoto.com/photos/almonds-picture-id153711056?b=1&k=20&m=153711056&s=170667a&w=0&h=8exR9-QE1WweR4ijYM7XdlELsrKBYLQyi7ILRexnHg4=",
+  //     price: 100,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Onions",
+  //     quantity: 1,
+  //     image:
+  //       "https://media.istockphoto.com/photos/red-onion-slice-picture-id175448479?b=1&k=20&m=175448479&s=170667a&w=0&h=kcjadYpPSifmgaESFhA7EKVMdLmL-pXPhrwSvJM0o2U=",
+  //     price: 200,
+  //   },
+  // ]);
 
   const handleDecrement = (prod_name) => {
-    setCart((cart) =>
-      cart.map((item) =>
-        prod_name === item.name
-          ? { ...item, quantity: item.quantity - (item.quantity > 1 ? 1 : 0) }
-          : item
-      )
-    );
+    axios.get(`${baseUrl}/updateCart/${cartId}/`)
+    // setCartData((cartData) =>
+    //   cartData.cartItems.map((item) =>
+    //     prod_name === item.name
+    //       ? { ...item, quantity: item.quantity - (item.quantity > 1 ? 1 : 0) }
+    //       : item
+    //   )
+    // );
   };
   const handleIncrement = (prod_name) => {
-    setCart((cart) =>
+
+    axios.put(`${baseUrl}/updateCart/${cartId}/${}`)
+    setCartData((cart) =>
       cart.map((item) =>
         prod_name === item.name
           ? { ...item, quantity: item.quantity + 1 }
@@ -110,23 +93,36 @@ export default function Cart() {
     );
   };
 
-  useEffect(() => {
-    axios.get(`${baseUrl}/v4/cart/${cartId}`).then((response) => {
-      setCartData(response.data);
-      console.log(cartData);
-    })
-  })
+  const deleteItem = (event) => {
+
+    console.log(event);
+    // axios.delete(`${baseUrl}/v4/deleteItem/${cartId}/${cartId.itemId}`).then((res) => {
+    //   console.log("Delete response", res);
+    //   console.log("Deleted successfully");
+    // })
+  }
 
   useEffect(() => {
-    axios.get(`${baseUrl}/v1/item/${item}`).then((res) => {
-      setItem(res.data);
-      console.log("Item name: ", item);
-    })
-  }, [item])
+    const fetchData = async () => {
+      const cartInfo = await axios.get(`${baseUrl}/v4/cart/${cartId}`);
+      setCartData(cartInfo.data);
+      console.log("Cart data: ", cartData);
+    };
 
+    const fetchItemData = async () => {
+      const productInfo = await axios.get(
+        `${baseUrl}/v1/item/${cartData.itemId}`
+      );
+      setItem(productInfo.data);
+      console.log("Item data: ", item);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
+      <Header/>
       <Grid container columnSpacing={2}>
         <Grid item xs={8}>
           <Typography style={{ fontSize: "30px" }}>
@@ -154,7 +150,7 @@ export default function Cart() {
                         marginLeft: "20px",
                         borderRadius: 2,
                       }}
-                      alt="Cherry"
+                      alt={item.itemName}
                       src={`${baseUrl}/v1/item/${item.itemName}/`}
                     />
                     <Grid item xs={2}>
@@ -173,7 +169,7 @@ export default function Cart() {
                         <div
                           class="value-button"
                           id="decrease"
-                          onClick={() => handleDecrement(item.itemName)}
+                          onClick={handleDecrement(item.itemName)}
                           value="Decrease Value"
                         >
                           <RemoveIcon />
@@ -208,6 +204,7 @@ export default function Cart() {
                     </Grid>
                     <Grid item xs={2}>
                       <Button
+                        onClick={deleteItem}
                         variant="contained"
                         style={{
                           maxWidth: "45px",
@@ -290,6 +287,7 @@ export default function Cart() {
                     </Typography>
                   </Grid>
                 </Box>
+                <Button variant="contained" onClick={()=>navigate('/checkout')}>Proceed to buy</Button>
               </Grid>
             </Item>
           </Grid>
