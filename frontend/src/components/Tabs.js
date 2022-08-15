@@ -142,16 +142,6 @@ export default function VerticalTabs() {
                     placeholder="Last name"
                   />
                 </Grid>
-                <Grid item xs={5}>
-                  <Typography variant="body2">Birth Date</Typography>
-
-                  <TextField
-                    fullWidth
-                    type="date"
-                    id="outlined-basic"
-                    variant="outlined"
-                  ></TextField>
-                </Grid>
                 <Grid item xs={12}>
                   <Typography variant="body2">Phone number</Typography>
 
@@ -185,21 +175,6 @@ export default function VerticalTabs() {
                     variant="outlined"
                     placeholder="john@example.com"
                   ></TextField>
-                </Grid>
-                <Grid item xs={12}>
-                  <Typography variant="body2">Password</Typography>
-
-                  <TextField
-                    type="password"
-                    id="outlined-basic"
-                    variant="outlined"
-                    placeholder="Password123"
-                  ></TextField>
-                </Grid>
-                <Grid item>
-                  <Button sx={{ px: 4, py: 1 }} variant="contained">
-                    Save
-                  </Button>
                 </Grid>
               </Grid>
             </Grid>
