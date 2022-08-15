@@ -72,7 +72,7 @@ export default function Cart() {
   // ]);
 
   const handleDecrement = (prod_name) => {
-    axios.get(`${baseUrl}/updateCart/${cartId}/`)
+    // axios.get(`${baseUrl}/updateCart/${cartId}/`)
     // setCartData((cartData) =>
     //   cartData.cartItems.map((item) =>
     //     prod_name === item.name
@@ -81,12 +81,14 @@ export default function Cart() {
     //   )
     // );
   };
-  const handleIncrement = (prod_name) => {
+  const handleIncrement = (itemId) => {
 
-    axios.put(`${baseUrl}/updateCart/${cartId}/${}`)
+    axios.put(`${baseUrl}/updateCart/${cartId}/${itemId}`, 2).then((res) => {
+      console.log(res);
+    })
     setCartData((cart) =>
       cart.map((item) =>
-        prod_name === item.name
+        itemId === item.itemId
           ? { ...item, quantity: item.quantity + 1 }
           : item
       )
@@ -169,7 +171,7 @@ export default function Cart() {
                         <div
                           class="value-button"
                           id="decrease"
-                          onClick={handleDecrement(item.itemName)}
+                          onClick={handleDecrement(item.itemId)}
                           value="Decrease Value"
                         >
                           <RemoveIcon />
@@ -182,7 +184,7 @@ export default function Cart() {
                         <div
                           class="value-button"
                           id="increase"
-                          onClick={() => handleIncrement(item.itemName)}
+                          onClick={() => handleIncrement(item.itemId)}
                           value="Increase Value"
                         >
                           <AddIcon />
