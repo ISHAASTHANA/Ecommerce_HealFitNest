@@ -38,14 +38,14 @@ export default function Cart() {
 
   const handleDecrement = (itemId) => {
     console.log(itemId);
-    axios.put(`${baseUrl}/v4/updateCartItemAdd/${CART_ID}/${itemId}`).then((res) => {
+    axios.put(`${baseUrl}/v4/updateCartItemSub/${CART_ID}/${itemId}`).then((res) => {
       console.log(res);
     })
 
   };
   const handleIncrement = (itemId) => {
     console.log(itemId);
-    axios.put(`${baseUrl}/v4/updateCartItemSub/${CART_ID}/${itemId}`).then((res) => {
+    axios.put(`${baseUrl}/v4/updateCartItemAdd/${CART_ID}/${itemId}`).then((res) => {
       console.log(res);
     })
   };
@@ -86,7 +86,7 @@ export default function Cart() {
         <Grid container sx={{ overflowX: 'hidden' }}>
           <Grid item xs={12} sm={8.5} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <TableContainer component={Paper} sx={{ margin: '2.5%' }}>
-              <Table id='mainTbl' sx={{ minWidth: 1050, maxWidth: 1050 }} aria-label="simple table">
+              <Table id='mainTbl' sx={{ minWidth: '100%', maxWidth: '100%' }} aria-label="simple table">
                 <TableHead>
                   <TableRow sx={{ ...tblHead }}>
                     <TableCell sx={{ ...tblHead }} align="center">Item</TableCell>
@@ -103,7 +103,7 @@ export default function Cart() {
                         key={item.itemName}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                       >
-                        <TableCell width={280}>
+                        <TableCell>
                           <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Grid item xs={6}>
                               <img alt={item.itemName} src={item.itemImage} style={{ height: 70, width: 70, maxHeight: { xs: 233, md: 167 }, maxWidth: { xs: 350, md: 250 }, marginTop: '15px', marginLeft: '40px', borderRadius: 4, objectFit: 'cover' }} />
@@ -115,12 +115,14 @@ export default function Cart() {
                             </Grid>
                           </Grid>
                         </TableCell>
-                        <TableCell width={10}>
-                          <form style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <TableCell>
+                          <form >
+                          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <div class="value-button" id="decrease" onClick={() => handleDecrement(item.itemId)} value="Decrease Value"><RemoveIcon /></div>
                             <input type="number" disabled id='number' value={item.itemQuantity} />
                             <div class="value-button" id="increase" onClick={() => handleIncrement(item.itemId)} value="Increase Value">+</div>
-                          </form>
+                            </div>
+                            </form>
                         </TableCell>
                         <TableCell align="center">Rs. {item.itemPrice}</TableCell>
                         <TableCell align="center">Rs. {item.itemPrice * item.itemQuantity}</TableCell>

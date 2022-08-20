@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, Button, Chip } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -8,7 +8,6 @@ import Footer from '../shared/Footer';
 import { useParams } from 'react-router-dom';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import axios from 'axios';
-import CartContext from '../contexts/CartContext';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
 
 const baseUrl = 'http://localhost:8989/api';
@@ -20,7 +19,6 @@ const IndividualProduct = () => {
     const [itemAvailable, setItemAvailable] = useState('')
     const { itemName } = useParams();
     const USER_ID = JSON.parse(localStorage.getItem('userId'));
-    let { cartId, setCartId } = useContext(CartContext);
 
 
     const handleIncrement = () => {
@@ -59,7 +57,6 @@ const IndividualProduct = () => {
         console.log("Local storage cartID: ", CART_ID);
         if (CART_ID === '') {
             axios.post(`${baseUrl}/v4/addToCart/${USER_ID}/${product.itemId}/${count}`).then((res) => {
-                setCartId(res.data);
                 console.log(res);
                 localStorage.setItem('cartId', JSON.stringify(res.data))
             }).catch(error => {

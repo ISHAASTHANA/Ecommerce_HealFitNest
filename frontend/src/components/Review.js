@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import { UserContext } from '../App';
 import Grid from '@mui/material/Grid';
+import { CART_ID, USER_ID} from '../utils/constant';
 import axios from 'axios';
 
 const products = [
@@ -36,12 +36,10 @@ const baseUrl = 'http://localhost:8989/api';
 
 export default function Review() {
 
-  let { userId, setUserId } = React.useContext(UserContext);
   const [orderData, setOrderData] = React.useState();
 
   React.useEffect(() => {
-
-    axios.get(`${baseUrl}/v6/orderUser/${userId}`).then((res) => {
+    axios.get(`${baseUrl}/v6/orderUser/${USER_ID}`).then((res) => {
       console.log(res.data);
     })
   }, []);
