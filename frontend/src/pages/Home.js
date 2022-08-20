@@ -37,22 +37,9 @@ export default function Home() {
         <div className='home-container'>
             <Header />
             <MovingCarousel />
-
-            {/* ***********************CATEGORIES******************* */}
             <Categories />
-
-            {/* ***********************FEATURED PRODUCTS************************** */}
             <ProductsBanner type={'Featured Products'} />
-
-            {/* ***********************BEST SELLERS************************** */}
             <Grid container className="container">
-                {/* <Grid item xs={12}>
-                    <div className="title" style={{ display: 'flex', justifyContent: 'center' }}>
-                        <div class="line"></div>
-                        <h1 variant="h4">Best Seller</h1>
-                        <div class="line"></div>
-                    </div>
-                </Grid> */}
                 <Grid container className="banner-container">
                     <Grid item>
                         <BestSellerCard image={bgImage} id="0" text={'Full Fresh Vegetable'} />
@@ -63,7 +50,6 @@ export default function Home() {
                 </Grid>
             </Grid>
 
-            {/* *********************DEAL OF THE DAY************************** */}
 
             <Grid container sx={{ m: 0, p: 0, backgroundColor: '#f8f8f8 ' }}>
                 <Grid item xs={12} className='image-container'>
@@ -75,48 +61,6 @@ export default function Home() {
                 </Grid>
             </Grid>
             <Footer />
-            {/* <Grid container className="deal-of-the-day-container"
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}
-            >
-                <Grid item xs={12} style={{ marginTop: '20px' }}>
-                    <div className="title" style={{
-                        padding: '5px'
-                    }}>
-                        <Typography variant="h4" sx={{
-                            fontFamily: 'Raleway,Arial, Helvetica, sans-serif',
-                            fontWeight: 'lighter',
-                            padding: '1rem',
-                            // backgroundColor: '#D9D9D9',
-                        }}>|| DEAL OF THE DAY!! ||</Typography>
-                    </div>
-                </Grid>
-                <Grid container className="deal-of-the-day-cards" sx={{
-                    // backgroundColor: '#D9D9D9',
-                    backgroundImage: `url(${bg})`,
-                    marginTop: '4rem',
-                    padding: '20px',
-                    // margin: '20px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}>
-                    {products.map((item, i) => {
-                        return (
-                            <Grid item>
-                                <ProductCard key={i} item={item} />
-                            </Grid>
-                        )
-                    })}
-                </Grid>
-            </Grid> */}
-
-
-
         </div>
-
     )
 }

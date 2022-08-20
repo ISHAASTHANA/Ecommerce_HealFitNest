@@ -53,32 +53,52 @@ const categoryData = [
         width: '100%',
       }
     ]
+  },
+  {
+    name: 'Household', subCategory: [
+      {
+        url: 'https://cdn.shopify.com/s/files/1/2518/4364/files/Must-Have_Organic_Items_for_Your_Bedroom.jpg?v=1533918698',
+        title: 'Bedroom',
+        width: '100%',
+      },
+      {
+        url: 'https://img.freepik.com/premium-photo/accessories-white-shelf-bathroom-interior_41470-4789.jpg?w=2000',
+        title: 'Washroom',
+        width: '100%',
+      },
+      {
+        url: 'https://cdn.shopify.com/s/files/1/2090/3151/products/DSC_2951_bcf3c527-d72e-4b12-aecb-4aea38572b35_533x.jpg?v=1592505425',
+        title: 'Poojaroom',
+        width: '100%',
+      },
+      {
+        url: 'https://www.millcreekgardens.com/wp-content/uploads/2016/10/gardening-supplies-new.jpg',
+        title: 'Garden',
+        width: '100%',
+      }
+    ]
+  },
+  {
+    name: 'Groceries', subCategory: [
+      {
+        url: 'https://www.homestratosphere.com/wp-content/uploads/2019/04/Different-types-of-spices-of-the-table-apr18.jpg',
+        title: 'Spices',
+        width: '100%',
+      },
+      {
+        url: 'https://cdn.shopify.com/s/files/1/0532/0405/8272/files/SF1_480x480.png?v=1619095577',
+        title: 'Dry Fruits',
+        width: '100%',
+      },
+      {
+        url: 'https://i0.wp.com/www.icrisat.org/wp-content/uploads/2018/07/Pulses2.jpg?fit=1400%2C931&ssl=1',
+        title: 'Grains & Pulses',
+        width: '100%',
+      }
+    ]
   }
 
 ]
-
-// const images = [
-//   {
-//     url: `${category1}`,
-//     title: 'Fruits & Vegetables',
-//     width: '100%',
-//   },
-//   {
-//     url: `${category2}`,
-//     title: 'Beverages',
-//     width: '100%',
-//   },
-//   {
-//     url: `${category3}`,
-//     title: 'Dairy',
-//     width: '100%',
-//   },
-//   {
-//     url: `${category4}`,
-//     title: 'Snacks',
-//     width: '100%',
-//   }
-// ];
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
