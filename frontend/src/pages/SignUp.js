@@ -1,10 +1,9 @@
 import React from 'react'
-import { Grid, Paper, Avatar, Typography, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, FormGroup, Checkbox, Button, Alert } from '@mui/material';
+import { Grid, Paper, Avatar, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, FormGroup, Checkbox, Button, Alert } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import validate from '../utils/signupValidation';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Login from '../pages/Login';
 
 const baseUrl = 'http://localhost:8989/api';
 const data = {
@@ -38,10 +37,10 @@ const Signup = () => {
   const handleSubmit = () => {
     validate();
     console.log(user);
-    axios.post(`${baseUrl}/v2/addUser`, user).then((response) => {
+    axios.post(`${baseUrl}/v2/registerUser`, user).then((response) => {
       console.log(response);
       if (response.data === "User Added Successfully") {
-        <Alert severity="success">User added successfully!</Alert>
+        alert(` ${response.data} `);
         navigate('/login');
       }
       

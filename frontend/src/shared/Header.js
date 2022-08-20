@@ -71,6 +71,7 @@ export default function Header() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     let { cartId, setCartId } = React.useContext(CartContext);
+    const CART_ID = JSON.parse(localStorage.getItem('cartId'));
 
 
     const navigate = useNavigate();
@@ -231,7 +232,7 @@ export default function Header() {
                         <IconButton
                             aria-label="add to shopping cart"
                             color="inherit"
-                            onClick={() => { navigate(`/cart/${cartId}`) }}
+                            onClick={() => { navigate(`/cart/${CART_ID}`); console.log('LocalStorage CART_ID: ', CART_ID) }}
                         >
                             <ShoppingCartRoundedIcon fontSize='larger' />
                         </IconButton>

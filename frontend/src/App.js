@@ -12,39 +12,26 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Subcategory from './pages/Subcategory';
 import IndividualProduct from './pages/IndividualProduct';
-import { useState } from 'react';
-import UserContext from './contexts/UserContext';
 import Checkout from './pages/Checkout';
-import CartContext from './contexts/CartContext';
 
 function App() {
-
-  const [userId, setUserId] = useState('');
-  const [cartId, setCartId] = useState('');
-
   return (
-    <UserContext.Provider value={{ userId, setUserId }}>
-      <CartContext.Provider value={{ cartId, setCartId }}>
-        <div className="App">
-          {/* <Home /> */}
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/signup' element={<Signup />} />
-            <Route path='/forgotPass' element={<ForgotPassword />} />
-            <Route path='/reset' element={<ResetPassword />} />
-            {/* <Route path='/category' element={<Category />} /> */}
-            <Route path='categories/:categoryName' element={<Category />} />
-            <Route path='categories/:categoryName/:subCategoryName' element={<Subcategory />} />
-            <Route path='item/:itemName' element={<Product />} />
-            <Route path='/product' element={<IndividualProduct />} />
-            <Route path='/account' element={<UserAccount />} />
-            <Route path='/cart/:cartId' element={<Cart />} />
-            <Route path='/checkout' element={<Checkout />} />
-          </Routes>
-        </div>
-      </CartContext.Provider>
-    </UserContext.Provider>
+    <div className="App">
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/forgotPass' element={<ForgotPassword />} />
+        <Route path='/reset' element={<ResetPassword />} />
+        <Route path='categories/:categoryName' element={<Category />} />
+        <Route path='categories/:categoryName/:subCategoryName' element={<Subcategory />} />
+        <Route path='item/:itemName' element={<Product />} />
+        <Route path='/product' element={<IndividualProduct />} />
+        <Route path='/account' element={<UserAccount />} />
+        <Route path='/cart/:cartId' element={<Cart />} />
+        <Route path='/checkout' element={<Checkout />} />
+      </Routes>
+    </div>
   );
 }
 
