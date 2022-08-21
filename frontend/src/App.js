@@ -26,14 +26,12 @@ function App() {
     <UserContext.Provider value={{ userId, setUserId }}>
       <CartContext.Provider value={{ cartId, setCartId }}>
         <div className="App">
-          {/* <Home /> */}
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/forgotPass' element={<ForgotPassword />} />
             <Route path='/reset' element={<ResetPassword />} />
-            {/* <Route path='/category' element={<Category />} /> */}
             <Route path='categories/:categoryName' element={<Category />} />
             <Route path='categories/:categoryName/:subCategoryName' element={<Subcategory />} />
             <Route path='item/:itemName' element={<Product />} />
