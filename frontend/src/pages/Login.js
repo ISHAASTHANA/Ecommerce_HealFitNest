@@ -40,7 +40,11 @@ const Login = () => {
     console.log(user);
     axios.post(`${baseUrl}/v2/loginUser`, user).then((response) => {
       console.log("Response", response)
-      localStorage.setItem('userId', JSON.stringify(response.data));
+      localStorage.setItem('userId', JSON.stringify(response.data.userId));
+      localStorage.setItem('cartId', JSON.stringify(response.data.cartId));
+
+      console.log(JSON.parse(localStorage.getItem('userId')));
+      console.log(JSON.parse(localStorage.getItem('cartId')));
       alert('Logged in successfully!!');
       navigate('/');
     }).catch(error => {

@@ -18,7 +18,10 @@ const IndividualProduct = () => {
     const [count, setCount] = useState(1);
     const [itemAvailable, setItemAvailable] = useState('')
     const { itemName } = useParams();
-    const USER_ID = JSON.parse(localStorage.getItem('userId'));
+    // const ID = JSON.parse(localStorage.getItem('id'));
+    const USER_ID = JSON.parse(localStorage.getItem('userId'))
+    const CART_ID = JSON.parse(localStorage.getItem('cartId'))
+    // const CART_ID = JSON.parse(localStorage.getItem('cartId'));
 
 
     const handleIncrement = () => {
@@ -35,6 +38,9 @@ const IndividualProduct = () => {
     }
 
     useEffect(() => {
+
+        // console.log(USER_ID);
+        // console.log(CART_ID);
         axios.get(`${baseUrl}/v1/item/${itemName}`).then((res) => {
             setProduct(res.data)
             if (product.itemAvailable === true) {
@@ -53,9 +59,7 @@ const IndividualProduct = () => {
 
     const addToCart = () => {
         console.log("Local Storage User id: ", USER_ID);
-        const CART_ID = JSON.parse(localStorage.getItem('cartId'));
-        console.log("Local storage cartID: ", CART_ID);
-        if (CART_ID === '') {
+        if (CART_ID === "Cart does not exists.") {
             axios.post(`${baseUrl}/v4/addToCart/${USER_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log(res);
                 localStorage.setItem('cartId', JSON.stringify(res.data))
@@ -67,6 +71,7 @@ const IndividualProduct = () => {
                 }
             })
         } else {
+            console.log("Local storage cartID: ", CART_ID);
             axios.put(`${baseUrl}/v4/updateCart/${CART_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log('Update cart response: ', res);
                 console.log("CartId:", CART_ID);

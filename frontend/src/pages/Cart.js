@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
 import Header from "../shared/Header.js";
 import { useNavigate, useParams } from "react-router-dom";
-import { CART_ID, USER_ID } from '../utils/constant';
+// import { CART_ID, USER_ID } from '../utils/constant';
 import axios from "axios";
 import ListItemText from "@mui/material/ListItemText";
 import "./Button.css";
@@ -35,38 +35,40 @@ export default function Cart() {
   const { cartId } = useParams();
   const [cartData, setCartData] = useState({});
   const navigate = useNavigate();
+  const USER_ID = JSON.parse(localStorage.getItem('userId'))
+  const CART_ID = JSON.parse(localStorage.getItem('cartId'))
 
   const handleDecrement = (itemId) => {
     console.log(itemId);
-    axios.put(`${baseUrl}/v4/updateCartItemSub/${CART_ID}/${itemId}`).then((res) => {
+    axios.put(`${baseUrl}/v4/updateCartItemSub/${cartId}/${itemId}`).then((res) => {
       console.log(res);
     })
 
   };
   const handleIncrement = (itemId) => {
     console.log(itemId);
-    axios.put(`${baseUrl}/v4/updateCartItemAdd/${CART_ID}/${itemId}`).then((res) => {
+    axios.put(`${baseUrl}/v4/updateCartItemAdd/${cartId}/${itemId}`).then((res) => {
       console.log(res);
     })
   };
 
   const deleteItem = (itemId) => {
     console.log(itemId);
-    axios.delete(`${baseUrl}/v4/deleteItem/${CART_ID}/${itemId}`).then((res) => {
+    axios.delete(`${baseUrl}/v4/deleteItem/${cartId}/${itemId}`).then((res) => {
       console.log("Delete response", res);
       alert("Item deleted successfully");
     })
   }
 
   useEffect(() => {
-    if (CART_ID) {
-      console.log("Local storage", CART_ID);
-    }
-    if (USER_ID) {
-      console.log("Local storage userId", USER_ID);
-    }
+    // if (CART_ID) {
+    //   console.log("Local storage", CART_ID);
+    // }
+    // if (USER_ID) {
+    //   console.log("Local storage userId", USER_ID);
+    // }
     const fetchData = async () => {
-      const cartInfo = await axios.get(`${baseUrl}/v4/cart/${CART_ID}`);
+      const cartInfo = await axios.get(`${baseUrl}/v4/cart/${cartId}`);
       setCartData(cartInfo.data);
       console.log("Cart data: ", cartData);
     };
@@ -171,7 +173,7 @@ export default function Cart() {
                     </List>
                   </Grid>
                   <Grid item xs={12}>
-                    <Button variant="contained" color="success" onClick={() => navigate('/checkout')}>Proceed to buy</Button>
+                    <Button variant="contained" color="success" onClick={() => navigate('cartReview')}>Proceed to buy</Button>
                   </Grid>
                 </Grid>
               </Grid>
