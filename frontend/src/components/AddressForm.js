@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import validate from '../utils/checkOutValid';
+
 export default function AddressForm() {
   return (
     <React.Fragment>
@@ -12,30 +13,6 @@ export default function AddressForm() {
         Shipping address
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="first_name"
-            name="firstName"
-            label="First name"
-            fullWidth
-            autoComplete="given-name"
-            variant="standard"
-          />
-          <small id='firstname_error'></small>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="last_name"
-            name="lastName"
-            label="Last name"
-            fullWidth
-            autoComplete="family-name"
-            variant="standard"
-          />
-          <small id='lastname_error'></small>
-        </Grid>
         <Grid item xs={12}>
           <TextField
             required

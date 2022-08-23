@@ -15,6 +15,7 @@ import IndividualProduct from './pages/IndividualProduct';
 import { useState } from 'react';
 import UserContext from './contexts/UserContext';
 import Checkout from './pages/Checkout';
+import CartReview from './pages/CartReview';
 import CartContext from './contexts/CartContext';
 
 function App() {
@@ -38,7 +39,8 @@ function App() {
             <Route path='/product' element={<IndividualProduct />} />
             <Route path='/account' element={<UserAccount />} />
             <Route path='/cart/:cartId' element={<Cart />} />
-            <Route path='/checkout' element={<Checkout />} />
+            <Route path='/cart/:cartId/cartReview' element={<CartReview />} />
+            <Route path='/cart/:cartId/cartReview/checkout' element={<Checkout />} />
           </Routes>
         </div>
       </CartContext.Provider>

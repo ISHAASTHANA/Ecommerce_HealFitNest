@@ -16,33 +16,35 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import YardIcon from "@mui/icons-material/Yard";
 import { useNavigate, useParams } from "react-router-dom";
 import { Collapse } from "@mui/material";
+import axios from "axios";
 
-const itemData = [
-  {
-    id: 0,
-    categoryName: "Ready To Eat",
-    subCategory: ["Fruits & Vegetables", "Snacks", "Beverages", "Dairy"],
-    icon: <EmojiFoodBeverageIcon />,
-  },
-  {
-    id: 1,
-    categoryName: "Personal Care",
-    subCategory: ["Face", "Hair", "Body"],
-    icon: <FaceRetouchingNaturalIcon />,
-  },
-  {
-    id: 2,
-    categoryName: "Groceries",
-    subCategory: ["Spices", "Dry Fruits", "Flours & Oils", "Grains & Pulses"],
-    icon: <LocalGroceryStoreIcon />,
-  },
-  {
-    id: 3,
-    categoryName: "House Essentials",
-    subCategory: ["Bedroom", "Washroom", "Puja Room", "Garden"],
-    icon: <YardIcon />,
-  },
-];
+const baseUrl = 'http://localhost:8989/api';
+// const itemData = [
+//   {
+//     id: 0,
+//     categoryName: "Ready To Eat",
+//     subCategory: ["Fruits & Vegetables", "Snacks", "Beverages", "Dairy"],
+//     icon: <EmojiFoodBeverageIcon />,
+//   },
+//   {
+//     id: 1,
+//     categoryName: "Personal Care",
+//     subCategory: ["Face", "Hair", "Body"],
+//     icon: <FaceRetouchingNaturalIcon />,
+//   },
+//   {
+//     id: 2,
+//     categoryName: "Groceries",
+//     subCategory: ["Spices", "Dry Fruits", "Flours & Oils", "Grains & Pulses"],
+//     icon: <LocalGroceryStoreIcon />,
+//   },
+//   {
+//     id: 3,
+//     categoryName: "House Essentials",
+//     subCategory: ["Bedroom", "Washroom", "Puja Room", "Garden"],
+//     icon: <YardIcon />,
+//   },
+// ];
 
 const FireNav = styled(List)({
   "& .MuiListItemButton-root": {
@@ -60,6 +62,7 @@ const FireNav = styled(List)({
 
 export default function CustomizedList() {
   const [state, setState] = React.useState(null);
+  const [itemData, setItemData] = React.useState([]);
   const [isOpenCollapse, setIsOpenCollapse] = React.useState(null);
   const navigate = useNavigate();
 
@@ -70,6 +73,13 @@ export default function CustomizedList() {
       setIsOpenCollapse(clickedIndex);
     }
   };
+
+  React.useEffect(() => {
+    axios.get(`${baseUrl}/v7/categories`).then((res) => {
+      setItemData(res.data);
+    })
+  })
+    
 
   return (
     <Box sx={{ display: "flex", backgroundColor: "#000" }}>
@@ -116,14 +126,14 @@ export default function CustomizedList() {
               // setOpen(state[item.id] || false)
               return (
                 <Box
-                  key={item.id}
+                  key={item.categoryId}
                   sx={{
                     bgcolor: state ? "rgba(71, 98, 130, 0.2)" : null,
                     pb: state ? 2 : 0,
                   }}
                 >
                   <ListItemButton
-                    key={item.id}
+                    key={item.categoryId}
                     alignItems="flex-start"
                     sx={{
                       px: 3,
@@ -148,7 +158,7 @@ export default function CustomizedList() {
                         lineHeight: "20px",
                         mb: "2px",
                       }}
-                      secondary={item.subCategory.join(',')}
+                      secondary={item.subCategoryName.join(',')}
                       secondaryTypographyProps={{
                         noWrap: true,
                         fontSize: 12,
@@ -163,7 +173,7 @@ export default function CustomizedList() {
                   </ListItemButton>
                   <Collapse in={isOpenCollapse === index} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                      {item.subCategory.map((data, i) => (
+                      {item.subCategoryName.map((data, i) => (
                         <ListItemButton
                           onClick={() => {
                             navigate(`/categories/${item.categoryName}/${data}`)
