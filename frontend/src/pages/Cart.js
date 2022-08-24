@@ -71,8 +71,8 @@ export default function Cart() {
   //   },
   // ]);
 
-  const handleDecrement = (prod_name) => {
-    axios.get(`${baseUrl}/updateCart/${cartId}/`)
+  //const handleDecrement = (prod_name) => {
+    //axios.get(`${baseUrl}/updateCart/${cartId}/`)
     // setCartData((cartData) =>
     //   cartData.cartItems.map((item) =>
     //     prod_name === item.name
@@ -80,8 +80,8 @@ export default function Cart() {
     //       : item
     //   )
     // );
-  };
-  const handleIncrement = (prod_name) => {
+  //};
+  /*const handleIncrement = (prod_name) => {
 
     axios.put(`${baseUrl}/updateCart/${cartId}/${}`)
     setCartData((cart) =>
@@ -91,7 +91,7 @@ export default function Cart() {
           : item
       )
     );
-  };
+  };*/
 
   const deleteItem = (event) => {
 
@@ -169,7 +169,7 @@ export default function Cart() {
                         <div
                           class="value-button"
                           id="decrease"
-                          onClick={handleDecrement(item.itemName)}
+                          //onClick={handleDecrement(item.itemName)}
                           value="Decrease Value"
                         >
                           <RemoveIcon />
@@ -182,7 +182,7 @@ export default function Cart() {
                         <div
                           class="value-button"
                           id="increase"
-                          onClick={() => handleIncrement(item.itemName)}
+                          //onClick={() => handleIncrement(item.itemName)}
                           value="Increase Value"
                         >
                           <AddIcon />
