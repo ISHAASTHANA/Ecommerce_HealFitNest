@@ -74,6 +74,7 @@ export default function Header() {
     // const CART_ID = JSON.parse(localStorage.getItem('cartId'));
     // const USER_ID = JSON.parse(localStorage.getItem('userId'))
     const CART_ID = JSON.parse(localStorage.getItem('cartId'))
+    const USER_ID = JSON.parse(localStorage.getItem('userId'))
 
 
     const navigate = useNavigate();
@@ -82,7 +83,7 @@ export default function Header() {
         navigate('/login')
     }
     const handleUserRoute = () => {
-        navigate('/account')
+        navigate(`/user/${USER_ID}`)
     }
 
     const handleProfileMenuOpen = (event) => {

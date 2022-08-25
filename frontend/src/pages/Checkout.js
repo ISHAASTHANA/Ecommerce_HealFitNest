@@ -15,6 +15,7 @@ import PaymentForm from '../components/PayementForm';
 import Review from '../components/Review';
 import Header from '../shared/Header';
 import validate from '../utils/checkOutValid';
+import axios from 'axios';
 
 
 
@@ -35,12 +36,20 @@ function getStepContent(step) {
 }
 
 const theme = createTheme();
+const baseUrl = "http://localhost:8989/api";
 
 export default function Checkout() {
     const navigate=useNavigate();
   const [activeStep, setActiveStep] = React.useState(0);
+  const CART_ID = JSON.parse(localStorage.getItem('cartId'))
 
   const handleNext = () => {
+    if (activeStep == 2) {
+      axios.post(`${baseUrl}/v6/addToOrder/${CART_ID}`).then((res) => {
+        console.log(res);
+        alert('Order placed successfully');
+      })
+    }
     if(activeStep==0)
     {
         if(validate())
@@ -81,12 +90,10 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Your order is placed...
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
+                  Thank you for shopping with us!! You will soon receive confirmation for your order.
                 </Typography>
                 <Button variant="contained" onClick={() => navigate('/')}  style={{maxWidth:'150px',maxHeight:'30px',minWidth:'150px',minHeight:'30px',marginTop:'10px',marginRight:'0px',backgroundColor:'rgb(62 114 62)'}}>
                     Buy More
