@@ -9,6 +9,9 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 import { Button, Grid, TextField } from "@mui/material";
 import TabContainer from "./TabContainer";
+import axios from "axios";
+
+const baseUrl = 'http://localhost:8989/api'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,10 +44,19 @@ function a11yProps(index) {
 
 export default function VerticalTabs() {
   const [value, setValue] = React.useState(0);
-
+  const USER_ID = JSON.parse(localStorage.getItem('userId'));
+  const [userInfo, setUserInfo] = React.useState({});
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  React.useEffect(() => {
+    console.log("Local Storage userId: ", USER_ID);
+    axios.get(`${baseUrl}/v2/myProfile/${USER_ID}`).then((res) => {
+      setUserInfo(res.data)
+      console.log(userInfo);
+    })
+  }, [])
 
   return (
     <Grid container sx={{ bgcolor: "background.paper", display: "flex" }}>
@@ -128,6 +140,7 @@ export default function VerticalTabs() {
                     type="text"
                     id="outlined-basic"
                     variant="outlined"
+                    value={userInfo.firstName}
                     placeholder="First name"
                   />
                 </Grid>
@@ -139,6 +152,7 @@ export default function VerticalTabs() {
                     type="text"
                     id="outlined-basic"
                     variant="outlined"
+                    value={userInfo.lastName}
                     placeholder="Last name"
                   />
                 </Grid>
@@ -149,6 +163,7 @@ export default function VerticalTabs() {
                     type="tel"
                     id="outlined-basic"
                     variant="outlined"
+                    value={userInfo.contact}
                     placeholder="9999999999"
                     helperText="Keep a 10-digit format with no spaces and dashes."
                   ></TextField>
@@ -170,9 +185,11 @@ export default function VerticalTabs() {
 
                   <TextField
                     fullWidth
+                    disabled
                     type="email"
                     id="outlined-basic"
                     variant="outlined"
+                    value={userInfo.email}
                     placeholder="john@example.com"
                   ></TextField>
                 </Grid>

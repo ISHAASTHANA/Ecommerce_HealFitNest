@@ -71,6 +71,9 @@ export default function Header() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     let { cartId, setCartId } = React.useContext(CartContext);
+    // const CART_ID = JSON.parse(localStorage.getItem('cartId'));
+    // const USER_ID = JSON.parse(localStorage.getItem('userId'))
+    const CART_ID = JSON.parse(localStorage.getItem('cartId'))
 
 
     const navigate = useNavigate();
@@ -231,7 +234,14 @@ export default function Header() {
                         <IconButton
                             aria-label="add to shopping cart"
                             color="inherit"
-                            onClick={() => { navigate(`/cart/${cartId}`) }}
+                            onClick={() => {
+                                if (CART_ID === "Cart does not exists.") {
+                                    alert("Cart is empty")
+                                } else {
+                                    console.log('LocalStorage CART_ID: ', CART_ID)                                    
+                                    navigate(`/cart/${CART_ID}`);
+                                }
+                            }}
                         >
                             <ShoppingCartRoundedIcon fontSize='larger' />
                         </IconButton>

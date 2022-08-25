@@ -30,7 +30,7 @@ export default function ProductsBanner(props) {
       axios.get(`${baseUrl}/items`).then((response) => {
         console.log(response);
         setState({
-          products: response.data.slice(6, 11)
+          products: response.data.slice(15, 20)
         })
         console.log(state.products[0].itemName);
       }).catch(error => {

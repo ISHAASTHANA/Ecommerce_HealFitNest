@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, Button, Chip } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -8,8 +8,6 @@ import Footer from '../shared/Footer';
 import { useParams } from 'react-router-dom';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import axios from 'axios';
-import { UserContext } from '../App';
-import CartContext from '../contexts/CartContext';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
 
 const baseUrl = 'http://localhost:8989/api';
@@ -20,8 +18,10 @@ const IndividualProduct = () => {
     const [count, setCount] = useState(1);
     const [itemAvailable, setItemAvailable] = useState('')
     const { itemName } = useParams();
-    let { userId, setUserId } = useContext(UserContext);
-    let { cartId, setCartId } = useContext(CartContext);
+    // const ID = JSON.parse(localStorage.getItem('id'));
+    const USER_ID = JSON.parse(localStorage.getItem('userId'))
+    const CART_ID = JSON.parse(localStorage.getItem('cartId'))
+    // const CART_ID = JSON.parse(localStorage.getItem('cartId'));
 
 
     const handleIncrement = () => {
@@ -38,9 +38,12 @@ const IndividualProduct = () => {
     }
 
     useEffect(() => {
+
+        // console.log(USER_ID);
+        // console.log(CART_ID);
         axios.get(`${baseUrl}/v1/item/${itemName}`).then((res) => {
             setProduct(res.data)
-            if (product.itemAvailable == true) {
+            if (product.itemAvailable === true) {
                 setItemAvailable('Available')
             } else {
                 setItemAvailable('Sold Out')
@@ -52,15 +55,14 @@ const IndividualProduct = () => {
                 console.log(error.response);
             }
         })
-    }, [itemName])
+    }, [product])
 
     const addToCart = () => {
-        console.log("User id: ", userId);
-        if (cartId === '') {
-            axios.post(`${baseUrl}/v4/addToCart/${userId}/${product.itemId}/${count}`).then((res) => {
-                setCartId(res.data);
+        console.log("Local Storage User id: ", USER_ID);
+        if (CART_ID === "Cart does not exists.") {
+            axios.post(`${baseUrl}/v4/addToCart/${USER_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log(res);
-                console.log("CartId:", cartId);
+                localStorage.setItem('cartId', JSON.stringify(res.data))
             }).catch(error => {
                 if (!error.response) {
                     console.log('Error: Network Error');
@@ -69,9 +71,11 @@ const IndividualProduct = () => {
                 }
             })
         } else {
-            axios.put(`${baseUrl}/v4/updateCart/${cartId}/${product.itemId}/${count}`).then((res) => {
+            console.log("Local storage cartID: ", CART_ID);
+            axios.put(`${baseUrl}/v4/updateCart/${CART_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log('Update cart response: ', res);
-                console.log("CartId:", cartId);
+                console.log("CartId:", CART_ID);
+                alert('Item added successfully to cart');
             }).catch(error => {
                 if (!error.response) {
                     console.log('Error: Network Error');
