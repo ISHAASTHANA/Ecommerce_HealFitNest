@@ -46,17 +46,39 @@ export default function VerticalTabs() {
   const [value, setValue] = React.useState(0);
   const USER_ID = JSON.parse(localStorage.getItem('userId'));
   const [userInfo, setUserInfo] = React.useState({});
+  const [userAddress, setUserAddress] = React.useState({});
+  var errorText = React.useState('Oops! Seems like no address added to your account!');
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   React.useEffect(() => {
-    console.log("Local Storage userId: ", USER_ID);
-    axios.get(`${baseUrl}/v2/myProfile/${USER_ID}`).then((res) => {
-      setUserInfo(res.data)
-      console.log(userInfo);
-    })
-  }, [])
+    const fetchUser = async () => {
+      const userData = await axios.get(`${baseUrl}/v2/myProfile/${USER_ID}`);
+      setUserInfo(userData.data);
+      console.log("User data: ", userInfo);
+    };
+
+    const fetchAddress = async () => {
+      const address = await axios.get(`${baseUrl}/v3/getAddresses/${USER_ID}`);
+      if (address == undefined) {
+        alert(`${errorText}`);
+      }
+      else {
+        console.log("User address: ", address.data[address.data.length - 1]);
+        setUserAddress(address.data[address.data.length - 1]);
+      }
+    };
+
+    const fetchOrders = async () => {
+      const orders = await axios.get(`${baseUrl}/v6/orderUser/${USER_ID}`);
+      console.log("Orders: ", orders);
+      // setUserAddress(address.data[address.data.length-1]);
+    };
+    fetchUser();
+    fetchAddress();
+    fetchOrders();
+  }, []);
 
   return (
     <Grid container sx={{ bgcolor: "background.paper", display: "flex" }}>
@@ -97,7 +119,7 @@ export default function VerticalTabs() {
             icon={<LocationOnOutlinedIcon />}
             {...a11yProps(1)}
           />
-          <Tab
+          {/* <Tab
             label="My orders"
             sx={{
               display: "flex",
@@ -110,7 +132,7 @@ export default function VerticalTabs() {
             }}
             icon={<LocalMallOutlinedIcon />}
             {...a11yProps(2)}
-          />
+          /> */}
         </Tabs>
       </Grid>
       <Grid item sm={9} sx={{ backgroundColor: "#f4f6f8" }}>
@@ -197,8 +219,8 @@ export default function VerticalTabs() {
             </Grid>
           </Grid>
         </TabPanel>
-        <TabPanel value={value} index={1}>
-          <Grid
+        <TabPanel sm={9} value={value} index={1}>
+          {!userAddress ? <Grid>{errorText}</Grid> : <Grid
             container
             sx={{
               margin: "1rem",
@@ -224,6 +246,7 @@ export default function VerticalTabs() {
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="Address line-1"
+                    value={userAddress.addressLine1}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -235,6 +258,7 @@ export default function VerticalTabs() {
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="Address line-2"
+                    value={userAddress.addressLine2}
                   />
                 </Grid>
                 <Grid item xs={5}>
@@ -246,6 +270,7 @@ export default function VerticalTabs() {
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="City name"
+                    value={userAddress.city}
                   ></TextField>
                 </Grid>
                 <Grid item xs={5}>
@@ -257,6 +282,7 @@ export default function VerticalTabs() {
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="State name"
+                    value={userAddress.state}
                   ></TextField>
                 </Grid>
                 <Grid item xs={5}>
@@ -267,6 +293,7 @@ export default function VerticalTabs() {
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="Country name"
+                    value={userAddress.country}
                   ></TextField>
                 </Grid>
                 <Grid item xs={5}>
@@ -278,6 +305,7 @@ export default function VerticalTabs() {
                     id="outlined-basic"
                     variant="outlined"
                     placeholder="333333"
+                    value={userAddress.postalCode}
                   ></TextField>
                 </Grid>
 
@@ -289,8 +317,10 @@ export default function VerticalTabs() {
               </Grid>
             </Grid>
           </Grid>
+          }
+
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        {/* <TabPanel value={value} index={2}>
           <Grid
             container
             sx={{
@@ -315,7 +345,7 @@ export default function VerticalTabs() {
               </Grid>
             </Grid>
           </Grid>
-        </TabPanel>
+        </TabPanel> */}
       </Grid>
     </Grid>
   );

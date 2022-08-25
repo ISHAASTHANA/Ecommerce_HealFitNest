@@ -40,7 +40,11 @@ const Signup = () => {
     axios.post(`${baseUrl}/v2/registerUser`, user).then((response) => {
       console.log(response);
       if (response.data === "User added successfully") {
+
         alert('New user added!');
+
+        alert(`${response.data}`);
+
         navigate('/login');
       }
       
