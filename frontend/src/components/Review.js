@@ -43,30 +43,55 @@ export default function Review() {
   const [orderData, setOrderData] = React.useState();
 
   const [cartInfo, setCartInfo] = React.useState({});
-  const CART_ID = JSON.parse(localStorage.getItem('cartId'))
+  const CART_ID = JSON.parse(localStorage.getItem('cartId'));
+  const USER_ID = JSON.parse(localStorage.getItem('userId'));
+  const ADDRESS_ID = JSON.parse(localStorage.getItem('addressId'))
+  const [userAddress, setUserAddress] = React.useState({});
   const navigate = useNavigate();
 
+  // React.useEffect(() => {
+  //   if (CART_ID) {
+  //     console.log("Local storage", CART_ID);
+  //   }
+  //   // if (USER_ID) {
+  //   //   console.log("Local storage userId", USER_ID);
+  //   // }
+  //   const fetchData = () => {
+  //     axios.get(`${baseUrl}/v4/cart/${CART_ID}`).then((res) => {
+  //       setCartInfo(res.data);
+  //       console.log("Cart data: ", cartInfo);
+  //     }).catch(error => {
+  //       if (!error.response) {
+  //         console.log('Error: Network Error');
+  //       } else {
+  //         console.log(error.response);
+  //       }
+  //     })
+  //   };
+  //   fetchData();
+  // }, [cartInfo]);
+
   React.useEffect(() => {
-    if (CART_ID) {
-      console.log("Local storage", CART_ID);
+    const fetchCart = async () => {
+      const cartData = await axios.get(`${baseUrl}/v4/cart/${CART_ID}`);
+      setCartInfo(cartData.data);
+      console.log("Cart data: ", cartInfo);
     }
-    // if (USER_ID) {
-    //   console.log("Local storage userId", USER_ID);
-    // }
-    const fetchData = () => {
-      axios.get(`${baseUrl}/v4/cart/${CART_ID}`).then((res) => {
-        setCartInfo(res.data);
-        console.log("Cart data: ", cartInfo);
-      }).catch(error => {
-        if (!error.response) {
-          console.log('Error: Network Error');
-        } else {
-          console.log(error.response);
+
+      const fetchAddress = async () => {
+        const address = await axios.get(`${baseUrl}/v3/getAddresses/${USER_ID}`);
+        if (!address) {
+          console.log('Address not defined');
         }
-      })
-    };
-    fetchData();
-  }, [cartInfo]);
+        else {
+          console.log("User address: ", address.data);
+          setUserAddress(address.data[address.data.length - 1]);
+        }
+      };
+
+    fetchAddress();
+    fetchCart();
+  }, [])
 
 
 
@@ -117,24 +142,18 @@ export default function Review() {
           <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
             Shipping
           </Typography>
-          <Typography gutterBottom>Aditya Joshi </Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom>{ userAddress.addressLine1}</Typography>
+          <Typography gutterBottom>{userAddress.addressLine2}</Typography>
+          <Typography gutterBottom>{userAddress.city}, {userAddress.state}, {userAddress.country } - { userAddress.postalCode}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom sx={{ mt: 2, marginLeft: '70px' }}>
             Payment details
           </Typography>
           <Grid container style={{ marginLeft: '70px' }}>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>Rs. {cartInfo.totalPrice}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
+            <Grid item xs={12}>
+              <Typography gutterBottom>Rs. {cartInfo.totalPrice}</Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
