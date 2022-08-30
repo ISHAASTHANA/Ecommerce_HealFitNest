@@ -41,14 +41,29 @@ const baseUrl = "http://localhost:8989/api";
 export default function Checkout() {
     const navigate=useNavigate();
   const [activeStep, setActiveStep] = React.useState(0);
+  var orderId;
   const CART_ID = JSON.parse(localStorage.getItem('cartId'))
 
   const handleNext = () => {
     if (activeStep == 2) {
+
+
       axios.post(`${baseUrl}/v6/addToOrder/${CART_ID}`).then((res) => {
-        console.log(res);
+        console.log(res.data.orderId);
+        localStorage.setItem('orderId', JSON.stringify(res.data.orderId));
+        console.log(JSON.parse(localStorage.getItem('orderId')));
+         orderId=res.data.orderId;
         alert('Order placed successfully');
+
+        axios.put(`${baseUrl}/v6/orderStatusChange/${orderId}`).then((res)=>{
+
+          console.log(res);
+         })
       })
+
+
+
+
     }
     if(activeStep==0)
     {

@@ -55,7 +55,7 @@ export default function Home() {
                 <Grid item xs={12} className='image-container'>
                     <img src='https://www.kindpng.com/picc/m/160-1609004_organic-food-vegetable-fruit-meat-organic-vegetables-png.png' className='quoteImage' alt='quote' />
                     <Typography className="text" sx={{
-                        fontSize: '3rem', fontWeight: 600
+                        fontSize: '2.3rem', fontWeight: 600
                     }}>"Let food be thy medicine, thy medicine shall be thy food."</Typography>
                     <Typography variant="h5" className="text-author"><i>- Hippocartes</i></Typography>
                 </Grid>

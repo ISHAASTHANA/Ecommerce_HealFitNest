@@ -108,10 +108,10 @@ export default function Cart() {
                         <TableCell>
                           <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Grid item xs={6}>
-                              <img alt={item.itemName} src={item.itemImage} style={{ height: 70, width: 70, maxHeight: { xs: 233, md: 167 }, maxWidth: { xs: 350, md: 250 }, marginTop: '15px', marginLeft: '40px', borderRadius: 4, objectFit: 'cover' }} />
+                              <img alt={item.itemName} src={item.itemImage} style={{ height: 70, width: 70, maxHeight: { xs: 233, md: 167 }, maxWidth: { xs: 350, md: 250 }, marginTop: '15px', marginLeft: '30px', borderRadius: 4, objectFit: 'cover' }} />
                             </Grid>
                             <Grid item xs={6}>
-                              <Typography variant="h6">
+                              <Typography fontSize='1.2rem' ml={3}>
                                 {item.itemName}
                               </Typography>
                             </Grid>
@@ -185,4 +185,3 @@ export default function Cart() {
     </>
   );
 }
-

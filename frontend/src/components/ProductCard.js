@@ -40,8 +40,9 @@ export default function ProductCard(props) {
           Rs. {props.item.itemPrice}
         </Typography>
 
-        <Button size="small"><AddShoppingCartIcon sx={{ color: '#267919' }} /></Button>
+
       </CardActions>
     </Card>
   );
 }
+//<Button size="small"><AddShoppingCartIcon sx={{ color: '#267919' }} /></Button>

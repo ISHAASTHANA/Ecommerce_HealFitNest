@@ -8,12 +8,12 @@
   z-index: 1;
   display: block;
   height: 500px;
-  width: 800px;
+  width: 700px;
   object-fit: contain;
   padding-left: 1rem;
 }
 .text {
-  width: 50%;
+  width: 45%;
   position: absolute;
   color: #397d02;
   right: 5px;
