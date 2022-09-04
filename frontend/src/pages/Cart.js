@@ -1,4 +1,4 @@
-import { Grid, Paper, styled, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, List, ListItem, IconButton } from "@mui/material";
+import { Grid, Paper, styled, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, List, ListItem, IconButton, Snackbar, Alert } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useState, useEffect } from "react";
@@ -38,6 +38,11 @@ export default function Cart() {
   const USER_ID = JSON.parse(localStorage.getItem('userId'))
   const CART_ID = JSON.parse(localStorage.getItem('cartId'))
 
+  const [severity, setSeverity] = useState('success');
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+
+
   const handleDecrement = (itemId) => {
     console.log(itemId);
     axios.put(`${baseUrl}/v4/updateCartItemSub/${cartId}/${itemId}`).then((res) => {
@@ -56,9 +61,18 @@ export default function Cart() {
     console.log(itemId);
     axios.delete(`${baseUrl}/v4/deleteItem/${cartId}/${itemId}`).then((res) => {
       console.log("Delete response", res);
-      alert("Item deleted successfully");
+      setSeverity('success');
+      setMessage("Item deleted successfully!");
+      setOpen(true);
     })
   }
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   useEffect(() => {
     // if (CART_ID) {
@@ -76,7 +90,13 @@ export default function Cart() {
   }, [cartData]);
 
   return (
-    <>
+    <div>
+      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={600} >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
+
       <Header />
       <Grid container columnSpacing={2}>
         <Grid item xs={8}>
@@ -119,17 +139,17 @@ export default function Cart() {
                         </TableCell>
                         <TableCell>
                           <form >
-                          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <div class="value-button" id="decrease" onClick={() => handleDecrement(item.itemId)} value="Decrease Value"><RemoveIcon /></div>
-                            <input type="number" disabled id='number' value={item.itemQuantity} />
-                            <div class="value-button" id="increase" onClick={() => handleIncrement(item.itemId)} value="Increase Value">+</div>
+                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                              <div class="value-button" id="decrease" onClick={() => handleDecrement(item.itemId)} value="Decrease Value"><RemoveIcon /></div>
+                              <input type="number" disabled id='number' value={item.itemQuantity} />
+                              <div class="value-button" id="increase" onClick={() => handleIncrement(item.itemId)} value="Increase Value">+</div>
                             </div>
-                            </form>
+                          </form>
                         </TableCell>
                         <TableCell align="center">Rs. {item.itemPrice}</TableCell>
                         <TableCell align="center">Rs. {item.itemPrice * item.itemQuantity}</TableCell>
                         <TableCell align="center">
-                          <IconButton color='error' aria-label="delete" onClick={()=> deleteItem(item.itemId)}>
+                          <IconButton color='error' aria-label="delete" onClick={() => deleteItem(item.itemId)}>
                             <DeleteIcon />
                           </IconButton>
                         </TableCell>
@@ -182,6 +202,6 @@ export default function Cart() {
 
         </Grid>
       </Grid>
-    </>
+    </div>
   );
 }

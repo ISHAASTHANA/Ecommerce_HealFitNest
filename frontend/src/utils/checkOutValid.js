@@ -11,9 +11,8 @@ export default function validate()
     checkpostalcode(postal_code)
     checkcity(city)
     checkcountry(country)
-    checkbox()
     
-    if(checkaddress(address) && checkpostalcode(postal_code) && checkcity(city) && checkcountry(country) && checkbox())
+    if(checkaddress(address) && checkpostalcode(postal_code) && checkcity(city) && checkcountry(country))
     {
         return true;
     }
@@ -89,16 +88,16 @@ function checkcountry(country)
     }
     
 }
-function checkbox()
-{
-    if(document.getElementById('checkbox').checked==true)
-    {
-        document.getElementById("checkbox_error").innerHTML=''
-        return(true)
-    }
-    else
-    {
-        document.getElementById("checkbox_error").innerText='Please accept the terms and conditions'
-        return(false)
-    }
-}
+// function checkbox()
+// {
+//     if(document.getElementById('checkbox').checked==true)
+//     {
+//         document.getElementById("checkbox_error").innerHTML=''
+//         return(true)
+//     }
+//     else
+//     {
+//         document.getElementById("checkbox_error").innerText='Please accept the terms and conditions'
+//         return(false)
+//     }
+// }

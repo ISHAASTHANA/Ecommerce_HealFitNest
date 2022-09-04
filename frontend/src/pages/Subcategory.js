@@ -30,7 +30,7 @@ const Subcategory = () => {
     }, [])
 
     return (
-        <div>
+        <div style={{marginBottom: '0px', paddingBottom: '0px'}}>
             <Header />
             <Grid container sx={{ display: 'flex', justifyContent: 'center' }}>
                 {/* {if()} */}
