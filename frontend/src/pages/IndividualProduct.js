@@ -70,7 +70,11 @@ const IndividualProduct = () => {
                     console.log(error.response);
                 }
             })
-        } else {
+        } 
+        else if(CART_ID==="User and Cart Id does not exist"){
+            alert("Please login to add item to the cart");
+        }
+        else {
             console.log("Local storage cartID: ", CART_ID);
             axios.put(`${baseUrl}/v4/updateCart/${CART_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log('Update cart response: ', res);

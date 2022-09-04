@@ -88,27 +88,30 @@ export default function Header() {
         navigate('/login')
     }
     const handleUserRoute = () => {
+        if(USER_ID==="User and Cart Id does not exist")
+            alert("Please Login!");
+        else
         navigate(`/user/${USER_ID}`)
     }
 
     const handleLogOut=()=>{
 
-        // axios.post(`${baseUrl}/v2/logout`).then((response) => {
-        //     console.log("Response", response)
-        //     localStorage.setItem('userId', JSON.stringify(response.data));
-        //     localStorage.setItem('cartId', JSON.stringify(response.data));
+        axios.get(`${baseUrl}/v2/logout`).then((response) => {
+            console.log("Response", response)
+            localStorage.setItem('userId', JSON.stringify(response.data));
+            localStorage.setItem('cartId', JSON.stringify(response.data));
       
-        //     console.log(JSON.parse(localStorage.getItem('userId')));
-        //     console.log(JSON.parse(localStorage.getItem('cartId')));
-        //     alert('Logged out successfully!!');
-        //     navigate('/');
-        //   }).catch(error => {
-        //     if (!error.response) {
-        //       console.log('Error: Network Error');
-        //     } else {
-        //       console.log(error.response);
-        //     }
-        //   })
+            console.log(JSON.parse(localStorage.getItem('userId')));
+            console.log(JSON.parse(localStorage.getItem('cartId')));
+            alert('Logged out successfully!!');
+            navigate('/');
+          }).catch(error => {
+            if (!error.response) {
+              console.log('Error: Network Error');
+            } else {
+              console.log(error.response);
+            }
+          })
 
 
 
@@ -130,6 +133,9 @@ export default function Header() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    const handleClose = () => {
+        setAnchorEl(null);
+      };
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
         <Menu
@@ -145,10 +151,16 @@ export default function Header() {
                 horizontal: 'right',
             }}
             open={isMenuOpen}
+            onClose={handleClose}
         >
-            <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+            
+           
+          
             <MenuItem onClick={handleRoute}>Login</MenuItem>
             <MenuItem onClick={handleUserRoute}>My Profile</MenuItem>
+          
+            <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+        
         </Menu>
     );
 
@@ -281,7 +293,11 @@ export default function Header() {
                             onClick={() => {
                                 if (CART_ID === "Cart does not exists.") {
                                     alert("Cart is empty")
-                                } else {
+                                } 
+                                else if(CART_ID==="User and Cart Id does not exist"){
+                                    alert("Please login to see your cart")
+                                }
+                                else {
                                     console.log('LocalStorage CART_ID: ', CART_ID)                                    
                                     navigate(`/cart/${CART_ID}`);
                                 }

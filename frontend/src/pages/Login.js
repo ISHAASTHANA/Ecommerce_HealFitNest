@@ -52,6 +52,7 @@ const Login = () => {
         console.log('Error: Network Error');
       } else {
         console.log(error.response);
+        alert("Please enter your email and password correctly");
       }
     })
 
