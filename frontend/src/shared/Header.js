@@ -18,6 +18,10 @@ import logo from '../assets/logo.jpeg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CartContext from '../contexts/CartContext';
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+
+const baseUrl = 'http://localhost:8989/api';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -65,7 +69,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+    
+    const [searchOpen,setSearchOpen] = React.useState(false);
     const [drawerOpen, setDrawerOpen] = React.useState(false);
 
     const isMenuOpen = Boolean(anchorEl);
@@ -84,6 +89,33 @@ export default function Header() {
     }
     const handleUserRoute = () => {
         navigate(`/user/${USER_ID}`)
+    }
+
+    const handleLogOut=()=>{
+
+        // axios.post(`${baseUrl}/v2/logout`).then((response) => {
+        //     console.log("Response", response)
+        //     localStorage.setItem('userId', JSON.stringify(response.data));
+        //     localStorage.setItem('cartId', JSON.stringify(response.data));
+      
+        //     console.log(JSON.parse(localStorage.getItem('userId')));
+        //     console.log(JSON.parse(localStorage.getItem('cartId')));
+        //     alert('Logged out successfully!!');
+        //     navigate('/');
+        //   }).catch(error => {
+        //     if (!error.response) {
+        //       console.log('Error: Network Error');
+        //     } else {
+        //       console.log(error.response);
+        //     }
+        //   })
+
+
+
+
+
+
+       
     }
 
     const handleProfileMenuOpen = (event) => {
@@ -114,6 +146,7 @@ export default function Header() {
             }}
             open={isMenuOpen}
         >
+            <MenuItem onClick={handleLogOut}>Logout</MenuItem>
             <MenuItem onClick={handleRoute}>Login</MenuItem>
             <MenuItem onClick={handleUserRoute}>My Profile</MenuItem>
         </Menu>
@@ -161,13 +194,20 @@ export default function Header() {
     );
 
     const [searchItem, setSearchItem] = React.useState('');
+
+
+    const [searchitemData, setsearchItemData] = React.useState([]);
+
+
+
     const handleSearch = (event) => {
         setSearchItem(event.target.value)
         console.log(searchItem);
 
         axios.get(`http://localhost:8989/api/v1/search/${searchItem}`).then((res) => {
-            console.log(res);
-            return(res.data);
+            console.log(res.data);
+            setsearchItemData(res.data);
+           
         })
     }
 
@@ -228,8 +268,11 @@ export default function Header() {
                         <StyledInputBase
                             placeholder="Search…"
                             inputProps={{ 'aria-label': 'search' }}
+                            
                         />
+                        
                     </Search>
+                   
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
                         <IconButton
