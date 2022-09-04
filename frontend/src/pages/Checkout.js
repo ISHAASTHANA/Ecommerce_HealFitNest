@@ -56,7 +56,7 @@ export default function Checkout() {
         alert('Order placed successfully');
 
         axios.put(`${baseUrl}/v6/orderStatusChange/${orderId}`).then((res)=>{
-        
+          localStorage.setItem('cartId', JSON.stringify(res.data));
           console.log(res);
          })
       })

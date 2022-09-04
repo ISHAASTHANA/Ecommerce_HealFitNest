@@ -59,6 +59,7 @@ const IndividualProduct = () => {
 
     const addToCart = () => {
         console.log("Local Storage User id: ", USER_ID);
+        console.log("Local storage cart id",CART_ID);
         if (CART_ID === "Cart does not exists.") {
             axios.post(`${baseUrl}/v4/addToCart/${USER_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log(res);
