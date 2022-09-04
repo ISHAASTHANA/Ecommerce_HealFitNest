@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Grid, Button, Chip } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react'
+import { Grid, Button, Chip, Snackbar, Alert } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,6 +9,9 @@ import { useParams } from 'react-router-dom';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import axios from 'axios';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const baseUrl = 'http://localhost:8989/api';
 
@@ -21,6 +24,9 @@ const IndividualProduct = () => {
     // const ID = JSON.parse(localStorage.getItem('id'));
     const USER_ID = JSON.parse(localStorage.getItem('userId'))
     const CART_ID = JSON.parse(localStorage.getItem('cartId'))
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+    const id = useRef(toast.info("Please wait..."));
     // const CART_ID = JSON.parse(localStorage.getItem('cartId'));
 
 
@@ -36,6 +42,15 @@ const IndividualProduct = () => {
         }
         console.log(count);
     }
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+
 
     useEffect(() => {
 
@@ -59,6 +74,7 @@ const IndividualProduct = () => {
 
     const addToCart = () => {
         console.log("Local Storage User id: ", USER_ID);
+        // id.current = toast.info("Please wait...");
         if (CART_ID === "Cart does not exists.") {
             axios.post(`${baseUrl}/v4/addToCart/${USER_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log(res);
@@ -75,7 +91,8 @@ const IndividualProduct = () => {
             axios.put(`${baseUrl}/v4/updateCart/${CART_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log('Update cart response: ', res);
                 console.log("CartId:", CART_ID);
-                alert('Item added successfully to cart');
+                setOpen(true);
+                // toast.update(id, { render: "All is good", type: "success", isLoading: false });                // alert('Item added successfully to cart');
             }).catch(error => {
                 if (!error.response) {
                     console.log('Error: Network Error');
@@ -90,6 +107,11 @@ const IndividualProduct = () => {
         <>
             <Header />
             <Grid container sx={{ flexGrow: 1 }}>
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={600} >
+                    <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
+                        Item added successfully!
+                    </Alert>
+                </Snackbar>
                 <Grid item xs={4.8} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                     <img style={{ width: '100%', objectFit: 'contain' }}
                         src={product.itemImage} alt={product.itemName}
