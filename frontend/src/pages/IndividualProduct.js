@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, Button, Chip, Snackbar, Alert } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -9,8 +9,6 @@ import { useParams } from 'react-router-dom';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import axios from 'axios';
 import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 
 const baseUrl = 'http://localhost:8989/api';
@@ -21,13 +19,11 @@ const IndividualProduct = () => {
     const [count, setCount] = useState(1);
     const [itemAvailable, setItemAvailable] = useState('')
     const { itemName } = useParams();
-    // const ID = JSON.parse(localStorage.getItem('id'));
     const USER_ID = JSON.parse(localStorage.getItem('userId'))
     const CART_ID = JSON.parse(localStorage.getItem('cartId'))
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState('');
-    const id = useRef(toast.info("Please wait..."));
-    // const CART_ID = JSON.parse(localStorage.getItem('cartId'));
+    const [severity, setSeverity] = React.useState('success');
 
 
     const handleIncrement = () => {
@@ -46,16 +42,12 @@ const IndividualProduct = () => {
         if (reason === 'clickaway') {
             return;
         }
-
         setOpen(false);
     };
 
 
 
     useEffect(() => {
-
-        // console.log(USER_ID);
-        // console.log(CART_ID);
         axios.get(`${baseUrl}/v1/item/${itemName}`).then((res) => {
             setProduct(res.data)
             if (product.itemAvailable === true) {
@@ -74,29 +66,44 @@ const IndividualProduct = () => {
 
     const addToCart = () => {
         console.log("Local Storage User id: ", USER_ID);
-        // id.current = toast.info("Please wait...");
         if (CART_ID === "Cart does not exists.") {
             axios.post(`${baseUrl}/v4/addToCart/${USER_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log(res);
                 localStorage.setItem('cartId', JSON.stringify(res.data))
+                setMessage('Item added to the cart');
+                setSeverity('success');
+                setOpen(true);
             }).catch(error => {
                 if (!error.response) {
                     console.log('Error: Network Error');
                 } else {
+                    setMessage(`${error.response}`);
+                    setSeverity('warning');
+                    setOpen(true);
                     console.log(error.response);
                 }
             })
-        } else {
+        }
+        else if (CART_ID === "User and Cart Id does not exist") {
+            setMessage("Seems like you aren't logged in yet!");
+            setSeverity('warning');
+            setOpen(true);
+        }
+        else {
             console.log("Local storage cartID: ", CART_ID);
             axios.put(`${baseUrl}/v4/updateCart/${CART_ID}/${product.itemId}/${count}`).then((res) => {
                 console.log('Update cart response: ', res);
                 console.log("CartId:", CART_ID);
+                setMessage('Item added to the cart');
+                setSeverity('success');
                 setOpen(true);
-                // toast.update(id, { render: "All is good", type: "success", isLoading: false });                // alert('Item added successfully to cart');
             }).catch(error => {
                 if (!error.response) {
                     console.log('Error: Network Error');
                 } else {
+                    setMessage(`${error.response}`);
+                    setSeverity('warning');
+                    setOpen(true);
                     console.log(error.response);
                 }
             })
@@ -106,10 +113,10 @@ const IndividualProduct = () => {
     return (
         <>
             <Header />
-            <Grid container sx={{ flexGrow: 1 }}>
+            <Grid container sx={{ flexGrow: 1, m:0, p:0 }}>
                 <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={600} >
-                    <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
-                        Item added successfully!
+                    <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+                        {message}
                     </Alert>
                 </Snackbar>
                 <Grid item xs={4.8} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

@@ -6,11 +6,8 @@ import LockIcon from '@mui/icons-material/Lock';
 import TextField from '@mui/material/TextField';
 import { Alert, Snackbar, Typography } from '@mui/material';
 import { Button, Link } from '@mui/material';
-import validate2 from '../utils/loginValidation';
 import axios from 'axios'
-import UserContext from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const baseUrl = 'http://localhost:8989/api';
@@ -30,9 +27,7 @@ const Login = () => {
   const [severity, setSeverity] = React.useState('success');
   const [open, setOpen] = React.useState(false);
   const [message, setMessage] = React.useState('');
-  // const { open, setOpen, message, setMessage } = useContext(SnackbarContext);
   const navigate = useNavigate();
-  const id = useRef(null);
 
 
   const handleChange = (event) => {
@@ -46,7 +41,6 @@ const Login = () => {
     if (reason === 'clickaway') {
       return;
     }
-
     setOpen(false);
   };
 
@@ -54,23 +48,18 @@ const Login = () => {
     // validate2();
     console.log(user);
     setOpen(true);
-    // id.current = toast.success("Please wait...");
     axios.post(`${baseUrl}/v2/loginUser`, user).then((response) => {
       console.log("Response", response)
       localStorage.setItem('userId', JSON.stringify(response.data.userId));
       localStorage.setItem('cartId', JSON.stringify(response.data.cartId));
-
       console.log(JSON.parse(localStorage.getItem('userId')));
       console.log(JSON.parse(localStorage.getItem('cartId')));
-      // alert('Logged in successfully!!');
-      // toast.update(id, { render: "All is good", type: "success", isLoading: false });
       setSeverity('success');
       setMessage("Logged in successfully!!");
       setOpen(true);
       setTimeout(() => {
         navigate('/');
       }, 2000);
-
     }).catch(error => {
       if (!error.response) {
         console.log('Error: Network Error');
@@ -86,8 +75,7 @@ const Login = () => {
 
   return (
     <div>
-      {/* <ToastContainer /> */}
-      <Snackbar anchorOrigin={{ vertical:'top', horizontal:'right' }} open={open} autoHideDuration={600} >
+      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={600} >
         <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
           {message}
         </Alert>

@@ -153,6 +153,8 @@ const Signup = () => {
             name="password"
             onChange={handleChange}
             value={user.password}
+            helperText='Min 8 character. 
+            Must include: (2 capital, small, a special character and at least 2 digits )'
             fullWidth
           />
           <small id='password_error'></small>

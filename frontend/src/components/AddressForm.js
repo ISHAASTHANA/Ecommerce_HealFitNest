@@ -2,10 +2,8 @@ import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import axios from 'axios';
-import { Button } from '@mui/material';
+import { Alert, Button, Snackbar } from '@mui/material';
 
 const baseUrl = 'http://localhost:8989/api';
 const data = {
@@ -21,6 +19,15 @@ export default function AddressForm() {
 
   const USER_ID = JSON.parse(localStorage.getItem('userId'));
   const [address, setAddress] = React.useState(data);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -34,9 +41,9 @@ export default function AddressForm() {
     axios.post(`${baseUrl}/v3/addAddress/${USER_ID}`, address).then((response) => {
       console.log(response);
       if (response) {
-        alert('Address added successfully!');
         localStorage.setItem('addressId', JSON.stringify(response.data.addressId));
         console.log(JSON.parse(localStorage.getItem('addressId')));
+        setOpen(true);
       }
     }).catch(error => {
       if (!error.response) {
@@ -47,13 +54,14 @@ export default function AddressForm() {
       }
     })
   }
-  // React.useEffect(() => {
-  //   if (JSON.parse(localStorage.getItem('addressId'))) {
-      
-  //   }
-  // })
   return (
     <React.Fragment>
+      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={600} >
+        <Alert onClose={handleClose} severity='success' sx={{ width: '100%' }}>
+          Address added successfully!
+        </Alert>
+      </Snackbar>
+
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
@@ -136,13 +144,6 @@ export default function AddressForm() {
             variant="standard"
           />
           <small id='country_error'></small>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" id='checkbox' />}
-            label="Use this address for payment details"
-          />
-          <small id='checkbox_error'></small>
         </Grid>
 
         <Grid item xs={12}>

@@ -16,6 +16,7 @@ import Review from '../components/Review';
 import Header from '../shared/Header';
 import validate from '../utils/checkOutValid';
 import axios from 'axios';
+import { Alert, Snackbar } from '@mui/material';
 
 
 
@@ -31,7 +32,7 @@ function getStepContent(step) {
       return <Review />;
     default:
       throw new Error('Unknown step');
-  Checkout(step);
+      Checkout(step);
   }
 }
 
@@ -39,30 +40,57 @@ const theme = createTheme();
 const baseUrl = "http://localhost:8989/api";
 
 export default function Checkout() {
-    const navigate=useNavigate();
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = React.useState(0);
   const CART_ID = JSON.parse(localStorage.getItem('cartId'))
+  let ORDER_ID;
+  const [severity, setSeverity] = React.useState('success');
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
+
 
   const handleNext = () => {
     if (activeStep == 2) {
       axios.post(`${baseUrl}/v6/addToOrder/${CART_ID}`).then((res) => {
+        console.log(CART_ID);
         console.log(res);
-        alert('Order placed successfully');
+        localStorage.setItem('orderId', JSON.stringify(res.data.orderId));
+        ORDER_ID = res.data.orderId;
+
+        if (res.data) {
+          setMessage('Order placed successfully!');
+          setSeverity('success');
+          setOpen(true);
+          axios.put(`${baseUrl}/v6/orderStatusChange/${ORDER_ID}`).then((res) => {
+            console.log(res);
+          })
+        }
+      }).catch(error => {
+        if (!error.response) {
+          console.log('Error: Network Error');
+        } else {
+          setSeverity('error');
+          setMessage(`${error.response}`);
+          setOpen(true);
+          console.log(error.response);
+        }
       })
     }
-    if(activeStep==0)
-    {
-        if(validate())
-      {
+    if (activeStep == 0) {
+      if (validate()) {
         setActiveStep(activeStep + 1);
       }
     }
-    else 
-    {
-        setActiveStep(activeStep + 1);
+    else {
+      setActiveStep(activeStep + 1);
     }
-    
-    
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
 
   const handleBack = () => {
@@ -72,8 +100,13 @@ export default function Checkout() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      
-      <Header/>
+
+      <Header />
+      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={600} >
+        <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+          {message}
+        </Alert>
+      </Snackbar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
@@ -95,9 +128,9 @@ export default function Checkout() {
                 <Typography variant="subtitle1">
                   Thank you for shopping with us!! You will soon receive confirmation for your order.
                 </Typography>
-                <Button variant="contained" onClick={() => navigate('/')}  style={{maxWidth:'150px',maxHeight:'30px',minWidth:'150px',minHeight:'30px',marginTop:'10px',marginRight:'0px',backgroundColor:'rgb(62 114 62)'}}>
-                    Buy More
-               </Button>
+                <Button variant="contained" onClick={() => navigate('/')} style={{ maxWidth: '150px', maxHeight: '30px', minWidth: '150px', minHeight: '30px', marginTop: '10px', marginRight: '0px', backgroundColor: 'rgb(62 114 62)' }}>
+                  Buy More
+                </Button>
               </React.Fragment>
             ) : (
               <React.Fragment>

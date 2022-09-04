@@ -9,54 +9,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import { Autocomplete, Drawer, TextField } from '@mui/material';
+import { Alert, Autocomplete, Drawer, Snackbar, TextField } from '@mui/material';
 import SideDrawer from './SideDrawer';
 import logo from '../assets/logo.jpeg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CartContext from '../contexts/CartContext';
 
-// const Search = styled('div')(({ theme }) => ({
-//     position: 'relative',
-//     borderRadius: theme.shape.borderRadius,
-//     border: '2px #c7d1d7',
-//     backgroundColor: '#f4f6f8',
-//     '&:hover': {
-//         backgroundColor: '#e5e7e7',
-//     },
-//     marginLeft: 0,
-//     width: '100%',
-//     [theme.breakpoints.up('sm')]: {
-//         marginLeft: theme.spacing(1),
-//         width: 'auto',
-//     },
-// }));
 
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//     padding: theme.spacing(0, 2),
-//     height: '90%',
-//     position: 'absolute',
-//     pointerEvents: 'none',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-// }));
-
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//     color: 'inherit',
-//     '& .MuiInputBase-input': {
-//         padding: theme.spacing(1, 1, 1, 0),
-//         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//         transition: theme.transitions.create('width'),
-//         width: '100%',
-//         [theme.breakpoints.up('sm')]: {
-//             width: '20ch',
-//             '&:focus': {
-//                 width: '25ch',
-//             },
-//         },
-//     },
-// }));
+const baseUrl = 'http://localhost:8989/api';
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -70,6 +31,7 @@ export default function Header() {
     let { cartId, setCartId } = React.useContext(CartContext);
     const CART_ID = JSON.parse(localStorage.getItem('cartId'))
     const USER_ID = JSON.parse(localStorage.getItem('userId'))
+    const [open, setOpen] = React.useState(false);
 
 
     const navigate = useNavigate();
@@ -78,7 +40,10 @@ export default function Header() {
         navigate('/login')
     }
     const handleUserRoute = () => {
-        navigate(`/user/${USER_ID}`)
+        if (USER_ID === "User and Cart Id does not exist")
+            setOpen(true);
+        else
+            navigate(`/user/${USER_ID}`)
     }
 
     const handleProfileMenuOpen = (event) => {
@@ -92,6 +57,32 @@ export default function Header() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
+    const handleLogOut = () => {
+        axios.get(`${baseUrl}/v2/logout`).then((response) => {
+            console.log("Response", response)
+            localStorage.setItem('userId', JSON.stringify(response.data));
+            localStorage.setItem('cartId', JSON.stringify(response.data));
+
+            console.log(JSON.parse(localStorage.getItem('userId')));
+            console.log(JSON.parse(localStorage.getItem('cartId')));
+            alert('Logged out successfully!!');
+            navigate('/');
+        }).catch(error => {
+            if (!error.response) {
+                console.log('Error: Network Error');
+            } else {
+                console.log(error.response);
+            }
+        })
+    }
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -111,6 +102,7 @@ export default function Header() {
         >
             <MenuItem onClick={handleRoute}>Login</MenuItem>
             <MenuItem onClick={handleUserRoute}>My Profile</MenuItem>
+            <MenuItem onClick={handleLogOut}>LogOut</MenuItem>
         </Menu>
     );
 
@@ -165,6 +157,12 @@ export default function Header() {
 
     return (
         <Box sx={{ flexGrow: 1 }} >
+            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={600} >
+                <Alert onClose={handleClose} severity='warning' sx={{ width: '100%' }}>
+                    Please log in first!!
+                </Alert>
+            </Snackbar>
+
             <AppBar position="static" style={{
                 color: '#1E1E1E',
                 boxShadow: 'none',
