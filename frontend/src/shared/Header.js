@@ -153,12 +153,11 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleClose}
         >
-            
+
            
           
             <MenuItem onClick={handleRoute}>Login</MenuItem>
             <MenuItem onClick={handleUserRoute}>My Profile</MenuItem>
-          
             <MenuItem onClick={handleLogOut}>Logout</MenuItem>
         
         </Menu>
