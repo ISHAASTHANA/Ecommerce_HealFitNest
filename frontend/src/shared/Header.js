@@ -1,80 +1,37 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
-import { Autocomplete, Drawer, TextField } from '@mui/material';
+import { Alert, Autocomplete, Drawer, Snackbar, TextField } from '@mui/material';
 import SideDrawer from './SideDrawer';
 import logo from '../assets/logo.jpeg';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CartContext from '../contexts/CartContext';
 
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    border: '2px     #c7d1d7',
-    backgroundColor: '#f4f6f8',
-    '&:hover': {
-        backgroundColor: '#e5e7e7',
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-        marginLeft: theme.spacing(1),
-        width: 'auto',
-    },
-}));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '90%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            width: '20ch',
-            '&:focus': {
-                width: '25ch',
-            },
-        },
-    },
-}));
+const baseUrl = 'http://localhost:8989/api';
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
     const [drawerOpen, setDrawerOpen] = React.useState(false);
+    const [list, setList] = React.useState([]);
 
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     let { cartId, setCartId } = React.useContext(CartContext);
-    // const CART_ID = JSON.parse(localStorage.getItem('cartId'));
-    // const USER_ID = JSON.parse(localStorage.getItem('userId'))
     const CART_ID = JSON.parse(localStorage.getItem('cartId'))
     const USER_ID = JSON.parse(localStorage.getItem('userId'))
+    const [open, setOpen] = React.useState(false);
 
 
     const navigate = useNavigate();
@@ -83,7 +40,10 @@ export default function Header() {
         navigate('/login')
     }
     const handleUserRoute = () => {
-        navigate(`/user/${USER_ID}`)
+        if (USER_ID === "User and Cart Id does not exist")
+            setOpen(true);
+        else
+            navigate(`/user/${USER_ID}`)
     }
 
     const handleProfileMenuOpen = (event) => {
@@ -97,6 +57,32 @@ export default function Header() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
+    const handleLogOut = () => {
+        axios.get(`${baseUrl}/v2/logout`).then((response) => {
+            console.log("Response", response)
+            localStorage.setItem('userId', JSON.stringify(response.data));
+            localStorage.setItem('cartId', JSON.stringify(response.data));
+
+            console.log(JSON.parse(localStorage.getItem('userId')));
+            console.log(JSON.parse(localStorage.getItem('cartId')));
+            alert('Logged out successfully!!');
+            navigate('/');
+        }).catch(error => {
+            if (!error.response) {
+                console.log('Error: Network Error');
+            } else {
+                console.log(error.response);
+            }
+        })
+    }
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -116,6 +102,7 @@ export default function Header() {
         >
             <MenuItem onClick={handleRoute}>Login</MenuItem>
             <MenuItem onClick={handleUserRoute}>My Profile</MenuItem>
+            <MenuItem onClick={handleLogOut}>LogOut</MenuItem>
         </Menu>
     );
 
@@ -160,19 +147,22 @@ export default function Header() {
         </Menu>
     );
 
-    const [searchItem, setSearchItem] = React.useState('');
-    const handleSearch = (event) => {
-        setSearchItem(event.target.value)
-        console.log(searchItem);
 
-        axios.get(`http://localhost:8989/api/v1/search/${searchItem}`).then((res) => {
-            console.log(res);
-            return(res.data);
+    React.useEffect(() => {
+        axios.get(`http://localhost:8989/api/v1/items`).then((res) => {
+            setList(res.data)
+            console.log("Item list", list);
         })
-    }
+    }, [])
 
     return (
         <Box sx={{ flexGrow: 1 }} >
+            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'right' }} open={open} autoHideDuration={600} >
+                <Alert onClose={handleClose} severity='warning' sx={{ width: '100%' }}>
+                    Please log in first!!
+                </Alert>
+            </Snackbar>
+
             <AppBar position="static" style={{
                 color: '#1E1E1E',
                 boxShadow: 'none',
@@ -192,46 +182,25 @@ export default function Header() {
                     </IconButton>
                     <img onClick={() => {
                         navigate('/');
-                    }} src={logo} alt='logo' style={{ display: { xs: 'none', sm: 'block' }, width: '160px', height: '60px', objectFit: 'cover' }} />
-                    {/* <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                    >
-                        LOGO
-                    </Typography> */}
-
+                    }} src={logo} alt='logo' style={{ display: { xs: 'none', sm: 'block' }, width: '160px', height: '60px', objectFit: 'cover', cursor: 'pointer' }} />
                     <Box sx={{ flexGrow: 1 }} />
-                    {/* <Autocomplete
-                        freeSolo
-                        id="free-solo-2-demo"
-                        disableClearable
-                        options={handleSearch}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                label="Search input"
-                                InputProps={{
-                                    ...params.InputProps,
-                                    type: 'search',
-                                }}
-                            />
-                        )}
-                    /> */}
-                    <Search value={searchItem}
-                            onChange={handleSearch} >
-                        <SearchIconWrapper 
-                        >
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    <Autocomplete
+                        onChange={(event, value) => navigate(`/item/${value}`)}
+                        id="auto-select"
+                        size='small'
+                        options={list.map(item => item.itemName)}
+                        sx={{
+                            width: 300, color: '#0000', backgroundColor: '#f4f6f8',
+                            '&:hover': {
+                                backgroundColor: '#e5e7e7',
+                            }
+                        }}
+                        renderInput={(params) =>
+                            <TextField {...params} label="Search items here.." />}
+                    />
 
+
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
                             aria-label="add to shopping cart"
                             color="inherit"
@@ -239,7 +208,7 @@ export default function Header() {
                                 if (CART_ID === "Cart does not exists.") {
                                     alert("Cart is empty")
                                 } else {
-                                    console.log('LocalStorage CART_ID: ', CART_ID)                                    
+                                    console.log('LocalStorage CART_ID: ', CART_ID)
                                     navigate(`/cart/${CART_ID}`);
                                 }
                             }}
