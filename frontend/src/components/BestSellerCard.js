@@ -22,7 +22,7 @@ export default function BestSellerCard(props) {
                     left: "20px",
                     padding: '20px',
                     width: '45%',
-                    textAlign: 'right',
+                    textAlign: 'center',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
