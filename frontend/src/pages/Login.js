@@ -44,6 +44,14 @@ const Login = () => {
     setOpen(false);
   };
 
+
+  // const handleGmail = () => {
+  //   // console.log(user);
+  //   // setOpen(true);
+  //   axios.get("http://localhost:8989/user");   
+  //   navigate('/');  
+  // }
+
   const handleSubmit = () => {
     // validate2();
     console.log(user);
@@ -103,12 +111,13 @@ const Login = () => {
             required id="password"
             label="Password"
             type='password'
-            name="password"
+            name="password" 
             value={user.password}
             onChange={handleChange}
             style={psstyle} fullWidth />
           <small id="password_error" color='red'></small>
           <Button variant="contained" type='submit' onClick={handleSubmit} style={btstyle} fullWidth>Log In</Button>
+          {/* <Button variant="contained" type='submit' onClick={handleGmail} style={btstyle} fullWidth>Login via Gmail</Button> */}
           <Typography> Don't have an account?
             <Link href="/signup">Sign Up</Link>
           </Typography>

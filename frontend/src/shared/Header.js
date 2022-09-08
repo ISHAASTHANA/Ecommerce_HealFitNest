@@ -59,6 +59,7 @@ export default function Header() {
     };
 
     const handleClose = (event, reason) => {
+        setAnchorEl(null);
         if (reason === 'clickaway') {
             return;
         }
@@ -99,6 +100,7 @@ export default function Header() {
                 horizontal: 'right',
             }}
             open={isMenuOpen}
+            onClose={handleClose}
         >
             <MenuItem onClick={handleRoute}>Login</MenuItem>
             <MenuItem onClick={handleUserRoute}>My Profile</MenuItem>
